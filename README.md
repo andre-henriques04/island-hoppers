@@ -1,24 +1,19 @@
 # Island Hoppers
 
-A 2D story-driven puzzle platformer prototype.
+## What we’re making
 
-## Requirements
+Island Hoppers is a 2D, side-view, single-player puzzle platformer about a bunny searching across islands for three lost siblings. Players explore each island, navigate obstacles, solve puzzles, and work toward finding the siblings.
 
-- Godot 4.7.2 Standard
-- GDScript
+The first goal is a small playable tutorial island that demonstrates the basic game loop. More islands and character abilities are part of the longer-term direction; their details are still being developed. This repository currently contains the Godot project setup and a placeholder scene, not the finished game.
 
-## Open and run
+## Tools you need
 
-1. Clone this repository.
-2. In Godot Project Manager, choose **Import**.
-3. Select `project.godot` from the repository folder.
-4. Open the project and press **F6** to run the starter scene.
+- **Godot 4.7.2 Standard:** Use the Standard build, not the .NET build. We’re starting with GDScript, which is included in Standard. Download Godot for your operating system from the [official downloads page](https://godotengine.org/download/archive/4.7.2-stable/).
+- **Git and access to this GitHub repository:** GitHub stores the shared project. GitKraken or the terminal can be used to manage branches, commits, and pushes.
 
-## Folders
+## Get, open, and run the project
 
-- `scenes/`: Godot scenes
-- `scripts/`: GDScript files
-- `assets/art/`: images and art
-- `assets/audio/`: sound and music
+For a first-time checkout, clone the repository:
 
-Godot recreates its `.godot/` editor cache locally, so it is excluded from Git.
+```bash
+git clone https://github.com/andre-henriques04/island-hoppers.git
