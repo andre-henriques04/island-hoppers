@@ -59,11 +59,18 @@ func _physics_process(delta: float) -> void:
     # -------------------------
     # Jump debuff timer
     # -------------------------
-    if jump_debuff_active:
-        jump_debuff_timer -= delta
+if jump_boost_active:
+    jump_boost_timer -= delta
 
-        if jump_debuff_timer <= 0.0:
-            jump_debuff_active = false
+    if jump_boost_timer <= 0.0:
+        jump_boost_active = false
+
+
+if jump_debuff_active:
+    jump_debuff_timer -= delta
+
+    if jump_debuff_timer <= 0.0:
+        jump_debuff_active = false
 
 
     # -------------------------
