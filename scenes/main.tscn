@@ -1,10 +1,64 @@
-[gd_scene format=3]
+[gd_scene format=4 uid="uid://cqaaewsm3o5sk"]
 
-[node name="Main" type="Node2D"]
+[ext_resource type="Texture2D" uid="uid://ddgtpjh7kfplp" path="res://assets/art/tilesheets/TutorialIslandPlatformsTileSheet.png" id="1_o5qli"]
 
-[node name="Label" type="Label" parent="."]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0wfyh"]
+texture = ExtResource("1_o5qli")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(9.899994, 21.93399, 64, -30.866005, 64, 64, -24.200005, 64)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -32.031906, 64, -32.031906, 64, 64, -64, 64)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -32.031906, 64, -36, 34, 22.5, -1.5, 64, -64, 64)
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-53.306, -31.173943, 64, -32.031906, 64, 36.47606, 30.293999, 34.276062, -0.5059967, 27.126068, -24.705994, 14.476059, -42.855995, 1.8260651)
+4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -32.031906, 64, -32.031906, 64, 33, -4.75, 37, -64, 32.5)
+5:0/0 = 0
+5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(53.306, -31.173943, -64, -32.031906, -64, 36.47606, -30.293999, 34.276062, 0.5059967, 27.126068, 24.705994, 14.476059, 42.855995, 1.8260651)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -26, -23.75, -64, 64, -64, 64, 64, -64, 64)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, -1.75, -64, -24.75, -32.5, -36.25, -3, -43.75, 32.5, -64, 64)
+3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -18.762817, 64, -14.902157, 42.666748, 15.017975, 24.972046, 22.095856, 9.207672, 26.278236, 1.1646271, 41.39917, -6.878418, 37.538506, -11.7042465, 46.86844, -24.57312, 30.460625, -36.47683, 27.243408, -55.78014, -6.5373917)
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, -8.5, -64, -7)
+1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 52.75, -47, 31.75, -44.5, 15.25, -20, -9.75, -18.5, -38.75, -8, -64, -7)
+2:2/0 = 0
+3:2/0 = 0
+3:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+0:3/0 = 0
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+1:3/0 = 0
+1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, -3.25, -64, -31.25, -31.5, -44.25, -12, -64, -6)
+2:3/0 = 0
+2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+3:3/0 = 0
+3:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+
+[sub_resource type="TileSet" id="TileSet_t588g"]
+tile_size = Vector2i(128, 128)
+physics_layer_0/collision_layer = 1
+sources/1 = SubResource("TileSetAtlasSource_0wfyh")
+
+[node name="Main" type="Node2D" unique_id=263929988]
+
+[node name="Label" type="Label" parent="." unique_id=1387760240]
 offset_left = 32.0
 offset_top = 32.0
 offset_right = 600.0
 offset_bottom = 80.0
 text = "Island Hoppers project setup is ready"
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1369620139]
+tile_map_data = PackedByteArray("AAAAAP//AQAAAAIAAAABAP//AQAAAAIAAAACAP//AQAAAAIAAAADAP//AQAAAAIAAAAEAP7/AQAAAAEAAAAEAP//AQABAAIAAAAFAP7/AQACAAEAAAAFAP//AQACAAAAABANAP//AQAAAAEAAAAOAP//AQABAAEAAAAAAP7/AQABAAAAAAABAP7/AQABAAAAAAACAPn/AQADAAEAAAACAP7/AQABAAAAAAADAPj/AQADAAAAAAADAPr/AQADAAEAAAADAP7/AQABAAAAAAAEAPj/AQAFAAAAAAAEAP3/AQAAAAAAAAAFAPr/AQADAAAAAAAFAP3/AQACAAAAAAAGAPj/AQADAAAAAAAGAPr/AQAFAAAAAAAGAP//AQABAAAAABAHAPj/AQAEAAAAAAAHAP3/AQADAAAAAAAHAP//AQABAAAAABAIAPj/AQAFAAAAAAAIAPv/AQADAAAAAAAIAP3/AQAFAAAAAAAIAP//AQABAAAAABAJAPn/AQADAAEAAAAJAPv/AQAEAAAAAAAJAP//AQABAAAAABAKAPf/AQADAAEAAAAKAPv/AQAEAAAAAAAKAP3/AQADAAAAAAAKAP//AQABAAAAABALAPv/AQAEAAAAAAALAP3/AQAEAAAAAAALAP//AQABAAAAABAMAPv/AQAFAAAAAAAMAP3/AQAFAAAAAAAMAP//AQABAAAAABANAP7/AQAAAAAAAAAOAPz/AQADAAAAAAAOAP7/AQABAAAAAAAMAPf/AQACAAAAABANAPf/AQABAAAAABANAPj/AQABAAEAABAOAPf/AQABAAAAABAOAPj/AQABAAEAABAPAPf/AQABAAAAABAPAPj/AQABAAEAABAQAPf/AQABAAAAABAQAPj/AQABAAEAABAMAPj/AQACAAEAABANAPn/AQABAAIAABAOAPn/AQAAAAIAABAPAP7/AQADAAMAAAAPAP//AQADAAMAAAAPAP3/AQACAAMAAAAPAPz/AQADAAMAAAAPAPv/AQACAAMAAAAPAPr/AQACAAMAAAAPAPn/AQACAAMAAAAQAPn/AQADAAMAAAAQAPr/AQADAAMAAAAQAPv/AQADAAMAAAAQAPz/AQADAAMAAAAQAP3/AQADAAMAAAAQAP7/AQADAAMAAAAQAP//AQADAAMAAAA=")
+tile_set = SubResource("TileSet_t588g")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=163382029]
+position = Vector2(1048, -643)
+zoom = Vector2(0.55, 0.55)
