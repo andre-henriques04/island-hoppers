@@ -167,7 +167,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_dp3eg")
 }],
 "loop": 1,
-"name": &"walk",
+"name": &"run",
 "speed": 16.0
 }]
 
@@ -188,11 +188,12 @@ tile_set = SubResource("TileSet_t588g")
 position = Vector2(1048, -643)
 zoom = Vector2(0.55, 0.55)
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=1507188363]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=1507188363 node_paths=PackedStringArray("sprite")]
 position = Vector2(-8, 186)
 script = ExtResource("3_sugp2")
 move_speed = 350.0
 jump_height = 200.0
+sprite = NodePath("AnimatedSprite2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=515727343]
 position = Vector2(135, -514)
@@ -202,6 +203,6 @@ shape = SubResource("RectangleShape2D_jyhfs")
 position = Vector2(135, -533)
 scale = Vector2(0.37, 0.37)
 sprite_frames = SubResource("SpriteFrames_y7xg4")
-animation = &"walk"
-frame = 6
-frame_progress = 0.07527638
+animation = &"run"
+frame = 9
+frame_progress = 0.015174813

@@ -5,8 +5,8 @@ extends CharacterBody2D
 @export var boosted_speed: float = 400.0
 @export var debuffed_speed: float = 100.0
 
-@export var gravity: float = 980.0   # positive = down in 2D
-@export var jump_height: float = 64.0  # pixels
+@export var gravity: float = 980.0
+@export var jump_height: float = 64.0
 @export var boosted_jump_height: float = 160.0
 @export var debuff_jump_height: float = 16.0
 
@@ -52,36 +52,45 @@ func _physics_process(delta: float) -> void:
 		velocity.y = -sqrt(2.0 * gravity * current_jump_height)
 
 	move_and_slide()
+
+	# Update character animation
 	_update_animation(horizontal)
 
 
 func _update_animation(horizontal: float) -> void:
 	if sprite == null:
 		return
-	if horizontal != 0.0:
-		sprite.flip_h = horizontal < 0.0
 
-	# Only plays animations that exist, so rename these to match yours
-	var anim := "idle"
-	if not is_on_floor():
-		anim = "jump"
-	elif horizontal != 0.0:
-		anim = "run"
-	if sprite.sprite_frames and sprite.sprite_frames.has_animation(anim):
-		if sprite.animation != anim:
+	# Flip based on movement direction
+	if horizontal < 0.0:
+		sprite.flip_h = true
+	elif horizontal > 0.0:
+		sprite.flip_h = false
+
+	# Choose animation
+	var anim := "run"
+
+	# Play run animation while moving
+	if horizontal != 0.0:
+		if sprite.animation != anim or not sprite.is_playing():
 			sprite.play(anim)
+	else:
+		sprite.stop()
 
 
 # --- Speed effects ---
 func activate_speed_boost() -> void:
 	speed_boost_timer = 20.0
 
+
 func activate_speed_debuff() -> void:
 	speed_debuff_timer = 10.0
+
 
 # --- Jump effects ---
 func activate_jump_boost() -> void:
 	jump_boost_timer = 20.0
+
 
 func activate_jump_debuff() -> void:
 	jump_debuff_timer = 15.0
