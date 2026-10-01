@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/timing_obstacle.gd" id="1_script"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hitbox"]
+size = Vector2(40, 36)
+
+[node name="TimingObstacle" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="Base" type="Polygon2D" parent="."]
+color = Color(0.25, 0.28, 0.32, 1)
+polygon = PackedVector2Array(-34, -3, 34, -3, 27, 14, -27, 14)
+
+[node name="WarningLight" type="Polygon2D" parent="."]
+visible = false
+position = Vector2(0, -22)
+polygon = PackedVector2Array(-8, 0, 0, -10, 8, 0, 0, 10)
+
+[node name="Pusher" type="Node2D" parent="."]
+position = Vector2(0, 72)
+
+[node name="Visual" type="Polygon2D" parent="Pusher"]
+polygon = PackedVector2Array(-24, -46, 12, -46, 26, -34, 26, -8, 18, 0, -18, 0, -26, -9, -26, -33)
+
+[node name="Hitbox" type="Area2D" parent="Pusher"]
+collision_layer = 0
+collision_mask = 1
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pusher/Hitbox"]
+position = Vector2(0, -23)
+shape = SubResource("RectangleShape2D_hitbox")
