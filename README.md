@@ -1,88 +1,149 @@
 # Island Hoppers
 
-Island Hoppers is a 2D, side-view, single-player puzzle platformer about a bunny searching across islands for three lost siblings. Players explore, move through platforming challenges, solve puzzles, and rescue siblings as they progress through the game.
+Island Hoppers is a 2D, side-view, single-player puzzle platformer about a bunny searching across islands for three lost siblings. The intended experience combines exploration, platforming, puzzles, and sibling rescues, with rescued siblings eventually unlocking abilities.
 
-The team's first goal is a small playable tutorial island that demonstrates the basic game loop. Additional islands, sibling abilities, and other ideas are part of the longer-term direction; their exact design is still being discussed. This repository currently contains the Godot project setup and a placeholder scene. It does not yet contain the completed game or its planned gameplay systems.
+## Project status — End of Sprint 1
+
+Sprint 1 established a **playable local prototype** in Godot. The shared project now brings together bunny movement, jumping, collision, walking animation, and a tutorial platform layout.
+
+The project is still a prototype. A complete tutorial playthrough, sibling-rescue objective, and browser release remain in development.
+
+### What is currently implemented
+
+- **Shared Godot project:** project configuration, repository structure, and developer instructions.
+- **Playable bunny:** horizontal movement, grounded jumping, gravity, platform collision, facing direction, and walking animation.
+- **Tutorial environment:** platform tiles, collision geometry, background artwork, and a layout spanning multiple planned screens.
+- **Timed-obstacle prototype:** a reusable component with configurable resting, warning, extension, and retraction phases, randomized waiting intervals, visual feedback, and a contact signal.
+- **Supporting assets and behavior:** home-screen and island-map artwork, boxing-glove animation assets, and scripts for speed and jump boosts/debuffs.
+
+### Integration limits
+
+Some components exist in the repository but are not yet connected to a complete gameplay flow:
+
+- The timed-obstacle behavior runs in a **separate preview scene**. It is not connected to the playable tutorial route and does not yet apply player knockback.
+- Boxing-glove visuals in the main scene do not establish a completed interactive obstacle.
+- Power-up scripts exist, but pickups are not yet placed in the playable level.
+- Home-screen and island-map artwork are available; a complete menu/navigation flow is not implemented in the current main scene.
+- Camera progression between tutorial screens, checkpoints, recovery after falling, sibling rescue, and island completion remain unfinished.
+- **No browser test build has been completed or published.** Run the prototype locally using Godot.
+
+### What we are building toward
+
+The next priority is a complete tutorial loop: enter the level, navigate its challenges, recover from mistakes, rescue a sibling, and reach a clear ending.
+
+Further work includes connecting obstacles and power-ups, implementing camera progression and checkpoints, completing navigation, and verifying browser export. Additional islands, sibling switching, and ability-based puzzles are part of the longer-term direction. Exact scope and ownership are tracked in Jira.
 
 ## Requirements
 
-- **Godot 4.7.2 Standard**. Use the Standard build, not the .NET build. This project uses GDScript.
-- **Git** and access to the [Island Hoppers GitHub repository](https://github.com/andre-henriques04/island-hoppers).
+- **Godot 4.7.2 Standard**, the team's agreed development version.
+- **Git** and access to the [Island Hoppers repository](https://github.com/andre-henriques04/island-hoppers).
+
+This project uses **GDScript** and the Compatibility renderer. Use the Standard Godot build; the project does not require the .NET build.
 
 ### Install Godot
 
-Download Godot 4.7.2 for your operating system from the [official Godot 4.7.2 download page](https://godotengine.org/download/archive/4.7.2-stable/). Choose the Standard build. The .NET build is for projects using C#; this project uses GDScript and does not need it.
+Download the team's agreed version from the [official Godot website](https://godotengine.org/download/). Use the archive if the main download page offers a different version.
 
-On macOS, if you use Homebrew, you can install Godot from Terminal:
-
-```bash
-brew install godot
-```
-
-Check the installed version with:
+Confirm the version in the Project Manager or editor. If Godot is available from your terminal, you can also run:
 
 ```bash
 godot --version
 ```
 
-It should report `4.7.2.stable.official` (followed by a build identifier). If you installed Godot another way, you can also confirm its version in the Project Manager or editor window.
+Coordinate engine-version changes with the team before updating the project.
 
 ## Get the project
 
 ### First-time checkout
 
-Open Terminal and run:
+Open a terminal and run:
 
 ```bash
 git clone https://github.com/andre-henriques04/island-hoppers.git
 cd island-hoppers
 ```
 
-This creates a local `island-hoppers` folder connected to the GitHub repository. You can also clone the repository using GitKraken's clone option.
+This creates a local `island-hoppers` folder connected to the shared repository. You can also clone using GitHub Desktop or GitKraken.
 
-### Update an existing local clone
+### Update an existing clone
 
-Before switching branches or pulling, save or commit any work you want to keep. Then update your local `main` branch:
+Before switching branches or pulling, commit or stash any local work you want to keep. Then update `main`:
 
 ```bash
 git switch main
 git pull origin main
 ```
 
-If you are already working on a feature branch, keep working on that branch and bring in `main` only when needed. Do not pull `main` while you have uncommitted changes you want to preserve.
+If you are working on a feature branch, stay on that branch and bring in changes from `main` when needed. Check `git status` before switching branches or merging.
 
 ## Open the project in Godot
 
 1. Start **Godot Project Manager**.
 2. Click **Import**.
-3. Browse to your local `island-hoppers` folder and select the `project.godot` file at its root.
-4. Click **Import & Edit** (or the equivalent open button) to open the project in the editor.
+3. Select `project.godot` in your local `island-hoppers` folder.
+4. Click **Import & Edit**, or the equivalent open button.
+5. Allow Godot to finish importing the assets before running the project.
 
-The repository root is the folder that contains `project.godot`, `README.md`, and the `scenes`, `scripts`, and `assets` folders. Godot may not list `project.godot` in its FileSystem dock because that dock focuses on game resources. To view or change project settings inside Godot, use **Project → Project Settings**. The raw `project.godot` file can be viewed in Finder or a text editor.
+The repository root contains `project.godot`, `README.md`, `scenes/`, `scripts/`, and `assets/`.
 
-## Run the project
+Godot may not show `project.godot` in its FileSystem dock because that dock focuses on game resources. Use **Project → Project Settings** to view project settings, or open the file in a text editor.
 
-The project is configured to start with `scenes/main.tscn`.
+## Run the prototype
 
-- In the Godot editor, click the **Run Project** play button in the upper-right toolbar.
-- On macOS, **Command-R** also runs the project.
-- If Godot asks you to choose a main scene, select `scenes/main.tscn`.
+### Main playable scene
 
-The current starter scene displays the message “Island Hoppers project setup is ready.” This is a placeholder to confirm the project opens and runs. It is not gameplay; the game systems and levels are still being developed.
+The configured starting scene is:
 
-To edit the main scene, find `scenes/main.tscn` in the FileSystem dock and double-click it. Its nodes appear in the Scene dock. Select a node to view its settings in the Inspector. Save scene changes with **Command-S** on macOS.
+```text
+res://scenes/main.tscn
+```
+
+Click **Run Project** in the editor. If Godot asks you to choose a main scene, select `scenes/main.tscn`.
+
+The main scene opens the tutorial platform environment directly. It includes the bunny controller, platform collision, animation, and background artwork.
+
+| Action | Control |
+|---|---|
+| Move left/right | Left/right arrow keys |
+| Jump while grounded | Space |
+| Stop and restart after falling or leaving the playable area | Use the editor's Stop and Run Project buttons |
+
+The controller currently uses Godot's `ui_left`, `ui_right`, and `ui_accept` input actions. Check **Project → Project Settings → Input Map** if changing the controls.
+
+Automatic respawning and checkpoint recovery are not implemented yet. Camera progression is also unfinished, so the full layout is not yet a continuous playable route.
+
+### Timed-obstacle preview
+
+To inspect the reusable timing behavior independently:
+
+1. Open `scenes/timing_obstacle_demo.tscn` in Godot.
+2. Choose **Run Current Scene**.
+3. Observe the obstacle's warning, extension, active interval, retraction, and randomized wait cycle.
+
+The reusable component is `scenes/timing_obstacle.tscn`, with behavior in `scripts/timing_obstacle.gd`.
+
+This preview demonstrates the timing component rather than player interaction or a completed tutorial obstacle.
 
 ## How Godot files fit together
 
-Godot projects are made of ordinary files in the repository. The editor provides a visual way to arrange nodes, edit their properties, and connect scripts, but the saved work is stored in files that Git can track.
+Godot stores the project as ordinary files that Git can track. The editor provides a visual way to arrange nodes, edit properties, and attach scripts.
 
-A **node** is one component, such as a character body, sprite, collision shape, camera, label, button, or timer. A **scene** is a saved tree of nodes and their properties. Scenes can be small reusable objects, characters, screens, or complete levels. A scene can include another scene; for example, an island scene can contain an instance of the player scene.
+- A **node** is a component such as a character body, sprite, collision shape, camera, or label.
+- A **scene** is a saved tree of nodes and their properties. Scenes can represent levels, screens, characters, or reusable objects.
+- A **GDScript** supplies behavior to a node, such as reading input, moving the player, or controlling an obstacle.
+- **Assets** supply images, animation frames, audio, and other resources.
 
-A **GDScript** file supplies behavior to a node. For example, a script attached to the player can read keyboard input and move the character. Not every node needs its own script: simple properties such as a label's text can be set directly in the scene.
+Paths beginning with `res://` are relative to the project root. For example, `res://scenes/main.tscn` refers to `scenes/main.tscn` in this repository.
 
-Godot paths beginning with `res://` are relative to the project root—the folder containing `project.godot`. For example, `res://scenes/main.tscn` refers to the `scenes/main.tscn` file in this repository. `res://` is a Godot resource path, not a separate folder on your computer.
+### Current gameplay flow
+
+The character controller reads keyboard input and updates movement. Godot's physics system handles gravity and collision with platforms. The animated sprite displays movement and facing direction, while the camera determines the visible part of the level.
+
+Obstacle and power-up components are being developed separately and will connect to this flow as their integration is completed.
 
 ## Repository layout
+
+The following shows the main areas and representative files; it is not an exhaustive listing.
 
 ```text
 island-hoppers/
@@ -90,39 +151,81 @@ island-hoppers/
 ├── README.md
 ├── .gitignore
 ├── scenes/
-│   ├── .gitkeep
-│   └── main.tscn
+│   ├── main.tscn
+│   ├── timing_obstacle.tscn
+│   └── timing_obstacle_demo.tscn
 ├── scripts/
-│   └── .gitkeep
+│   ├── CharacterMovement.gd
+│   ├── timing_obstacle.gd
+│   ├── Carrot.gd
+│   ├── SpoiledFood1.gd
+│   ├── JumpBoost1.gd
+│   └── JumpDebuff1.gd
 └── assets/
+    ├── player/
     ├── art/
-    │   └── .gitkeep
+    │   ├── HomeScreen/
+    │   ├── backgrouds/
+    │   ├── spritesheets/
+    │   └── tilesheets/
     └── audio/
-        └── .gitkeep
 ```
 
-The `.gitkeep` files are placeholders so Git preserves empty folders and teammates can see the planned layout on GitHub. `.gitkeep` is just a conventional filename; Git tracks the file, which makes the folder appear. Once a folder contains real project files, its placeholder can be removed.
+`backgrouds` is the current folder spelling. Coordinate any rename with the team and update Godot resource references.
 
-- **`project.godot`** — project configuration, including the project name, renderer, and starting scene.
-- **`README.md`** — this guide to the game and repository.
-- **`scenes/`** — Godot scene files, usually ending in `.tscn`. Put levels, screens, and reusable game objects here. The saved node tree and node properties are stored in each scene file.
-- **`scripts/`** — GDScript source files ending in `.gd`. Put reusable behavior here and attach scripts to the relevant nodes or scenes.
-- **`assets/art/`** — source images and art, such as bunny and sibling sprites, island backgrounds, platforms, puzzle objects, animations, and interface art.
-- **`assets/audio/`** — source music and sound effects.
-- **`.gitignore`** — tells Git which generated or local files to leave out of commits.
-- **`.godot/`** — a local editor cache created by Godot. It is ignored by Git and should not be committed. Godot recreates it when needed.
+- **`project.godot`** — project configuration, renderer, and starting scene.
+- **`scenes/`** — level scenes and reusable objects.
+- **`scripts/`** — player, obstacle, and power-up behavior.
+- **`assets/player/`** — player animation artwork.
+- **`assets/art/`** — interface artwork, backgrounds, tiles, and object animation assets.
+- **`assets/audio/`** — intended location for music and sound effects.
+- **`.gitignore`** — excludes generated or local files from new commits.
+- **`.godot/`** — generated editor cache; do not commit it.
 
-As the game grows, organize related files together and follow the team's agreed naming and ownership conventions. For example, a character scene may have its own scene and script, while the art used by that character is kept in the art assets folder.
+Some folders may contain `.gitkeep` placeholders so Git preserves otherwise empty directories. Keep Godot `.uid` and asset `.import` metadata with their corresponding resources when generated or changed; these are distinct from the ignored `.godot/` cache.
 
 ## Working with Git and GitHub
 
-Git tracks saved project files and their history. GitHub hosts the shared repository. Godot does not automatically commit or push your edits.
+Git tracks saved files and their history. GitHub hosts the shared repository. Godot does not automatically commit or push editor changes.
 
-1. Start from the latest `main` and create a separate branch for your task.
-2. Make and save your changes in the local repository folder. Keep unrelated work out of the same change when practical.
-3. Run the project in Godot and check that your change works.
-4. Review changed files in GitKraken or with `git status`.
-5. Stage and commit the files for your task, then push your branch to GitHub.
-6. Open a pull request into `main` so teammates can review or test the work before it is merged.
+1. Start from an updated `main` branch.
+2. Create a separate branch for a clearly scoped Jira task.
+3. Make and save changes inside your local repository.
+4. Run the affected scene and the main project.
+5. Review changed files using `git status` or your Git application.
+6. Commit the relevant source files and push your branch.
+7. Open a pull request into `main`.
+8. Have a teammate review or test the change before merging.
+9. Update the Jira ticket with the PR link, validation, and accurate status.
 
-Commit project source files such as scenes, scripts, images, audio, and project settings. Do not commit the generated `.godot/` cache. Coordinate with teammates before editing the same scene or script, because overlapping edits may need to be reconciled during a merge.
+For a task identified as `IS-XX`, a branch might be:
+
+```bash
+git switch -c IS-XX-short-description
+```
+
+Replace `IS-XX` with the actual ticket key. Include that key in the PR title or description so the work is traceable.
+
+Commit scenes, scripts, artwork, relevant resource metadata, and intentional project-setting changes. Leave generated caches and unrelated local files out of the commit.
+
+Coordinate before editing the same scene or script. Agree on scene ownership, asset scale, input actions, node paths, and interaction signals to reduce integration problems.
+
+### Before merging
+
+- Confirm the project imports without missing resources or script errors.
+- Run the changed scene and check the main scene for regressions.
+- For player or level changes, check movement, jumping, animation, collision, scale, and camera behavior.
+- State which features are complete and which are still separate prototypes.
+- Record any remaining work or known limitations in Jira.
+
+Sprint 1 validation relied on manual Godot testing and team smoke tests. This repository does not currently include an automated test suite or a verified browser build.
+
+## Project tracking and documentation
+
+- [GitHub repository and pull requests](https://github.com/andre-henriques04/island-hoppers)
+- [Jira board](https://txst-fall26-cs3398-009-team04.atlassian.net/jira/software/projects/IS/boards/3)
+- [Product overview and onboarding](https://txst-fall26-cs3398-009-team04.atlassian.net/wiki/spaces/I/pages/4980738/Island+Hoppers+Onboarding)
+- [Sprint planning](https://txst-fall26-cs3398-009-team04.atlassian.net/wiki/spaces/I/pages/7700481/Sprint+Planning)
+- [Sprint 1 retrospective](https://txst-fall26-cs3398-009-team04.atlassian.net/wiki/spaces/I/pages/15925249/Sprint+1+Retrospective)
+
+Jira tracks ownership, current status, and remaining work. Confluence records product direction, planning, and team decisions. This README explains how to work with and run the current repository.
