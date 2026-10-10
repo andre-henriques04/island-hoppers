@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Island Hoppers"
-run/main_scene="res://scenes/main.tscn"
+run/main_scene="uid://b023m3a8jg1na"
 config/features=PackedStringArray("4.7")
 
 [rendering]
