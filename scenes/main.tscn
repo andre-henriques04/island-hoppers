@@ -10,7 +10,7 @@
 texture = ExtResource("1_o5qli")
 texture_region_size = Vector2i(128, 128)
 0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(9.899994, 21.93399, 64, -30.866005, 64, 64, -24.200005, 64)
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(64, -31.903332, 64, 64, -23.753357, 64)
 1:0/0 = 0
 1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -32.031906, 64, -32.031906, 64, 64, -64, 64)
 2:0/0 = 0
