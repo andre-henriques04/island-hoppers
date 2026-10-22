@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://sv65k63pv6iv" path="res://assets/art/backgrouds/tutorial_background.png" id="5_tbgi4"]
 [ext_resource type="Texture2D" uid="uid://bkgnrdsrdoxdo" path="res://assets/player/bunny_jump_spritesheet.png" id="5_tipki"]
 [ext_resource type="Script" uid="uid://dyrpsoyiwa1pv" path="res://scripts/CharacterMovement.gd" id="player_script"]
+[ext_resource type="Script" path="res://scripts/tutorial_camera.gd" id="tutorial_camera"]
 [ext_resource type="Texture2D" uid="uid://5p5bjp8goweo" path="res://assets/player/bunny_walk_spritesheet.png" id="player_texture"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0wfyh"]
@@ -936,7 +937,9 @@ animations = [{
 "speed": 16.0
 }]
 
-[node name="Main" type="Node2D" unique_id=263929988]
+[node name="Main" type="Node2D" unique_id=263929988 node_paths=PackedStringArray("player")]
+script = ExtResource("tutorial_camera")
+player = NodePath("CharacterBody2D")
 
 [node name="SiblingTemp" type="Label" parent="." unique_id=2111450098]
 offset_left = 6091.0
