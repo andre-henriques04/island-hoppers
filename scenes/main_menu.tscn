@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cnsfl38dch5q" path="res://assets/art/HomeScreen/Clouds_Texture.png" id="2_bqqt6"]
 [ext_resource type="Script" uid="uid://bf567tcfdgyqt" path="res://scripts/cloudMovement.gd" id="3_bqqt6"]
 [ext_resource type="Texture2D" uid="uid://d1eu0my176bqf" path="res://assets/art/HomeScreen/HomeScreen_NoTitle.png" id="4_8ln24"]
+[ext_resource type="AudioStream" uid="uid://blwktjhi6h76q" path="res://assets/audio/Menu-audio.ogg" id="5_rtw2f"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7b55j"]
 
@@ -78,19 +79,18 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_1dfpl")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qywvv")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_3wgol")
 
-[node name="CompletionStatus" type="Label" parent="MenuUI"]
+[node name="CompletionStatus" type="Label" parent="MenuUI" unique_id=1572365627]
 z_index = 100
 layout_mode = 0
 offset_left = 20.0
 offset_top = 18.0
 offset_right = 470.0
 offset_bottom = 62.0
-mouse_filter = 2
-text = "Tutorial complete — select Play to play again"
-theme_override_font_sizes/font_size = 22
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 22
+text = "Tutorial complete — select Play to play again"
 
 [node name="Clouds" type="Node2D" parent="." unique_id=894416836]
 
@@ -101,6 +101,11 @@ script = ExtResource("3_bqqt6")
 cloud_texture = ExtResource("2_bqqt6")
 cloud_y = 0.0
 cloud_count = 1
+
+[node name="Music" type="AudioStreamPlayer" parent="." unique_id=1765596617]
+stream = ExtResource("5_rtw2f")
+volume_db = -20.0
+autoplay = true
 
 [node name="Background" type="TextureRect" parent="." unique_id=1407016905]
 z_index = -10
