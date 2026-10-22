@@ -961,7 +961,6 @@ tile_set = SubResource("TileSet_t588g")
 [node name="Camera (Screen 1)" type="Camera2D" parent="." unique_id=1559242596]
 offset = Vector2(0, -1260)
 anchor_mode = 0
-enabled = false
 zoom = Vector2(0.55, 0.55)
 
 [node name="Camera (Screen 2)" type="Camera2D" parent="." unique_id=1176407655]
@@ -979,6 +978,7 @@ zoom = Vector2(0.55, 0.55)
 [node name="Camera (Screen 4)" type="Camera2D" parent="." unique_id=733383343]
 offset = Vector2(4190, -2182)
 anchor_mode = 0
+enabled = false
 zoom = Vector2(0.55, 0.55)
 
 [node name="Camera (Screen 5)" type="Camera2D" parent="." unique_id=526585283]
@@ -998,7 +998,7 @@ position = Vector2(4028, -178)
 sprite_frames = SubResource("SpriteFrames_3v4ma")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=1507188363 node_paths=PackedStringArray("sprite")]
-position = Vector2(4292, -1489)
+position = Vector2(233, -313)
 script = ExtResource("player_script")
 move_speed = 350.0
 jump_height = 200.0
