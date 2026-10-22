@@ -661,7 +661,7 @@ texture = ExtResource("15_jkv2x")
 position = Vector2(-2.5, -19.5)
 shape = SubResource("RectangleShape2D_t588g")
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=19534881]
+[node name="Music" type="AudioStreamPlayer" parent="." unique_id=19534881]
 stream = ExtResource("17_muem4")
 volume_db = -20.0
 autoplay = true

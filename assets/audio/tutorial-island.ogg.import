@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/tutorial-island.ogg-85e9ed678e30fa346d768e1aa
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0
