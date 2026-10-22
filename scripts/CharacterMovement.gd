@@ -28,6 +28,7 @@ var speed_boost_timer: float = 0.0
 var speed_debuff_timer: float = 0.0
 var jump_boost_timer: float = 0.0
 var jump_debuff_timer: float = 0.0
+var obstacle_launch_timer: float = 0.0
 
 
 func _ready() -> void:
@@ -55,7 +56,9 @@ func _physics_process(delta: float) -> void:
 	if speed_debuff_timer > 0.0:
 		current_speed = debuffed_speed
 
-	velocity.x = horizontal * current_speed
+	obstacle_launch_timer = maxf(obstacle_launch_timer - delta, 0.0)
+	if obstacle_launch_timer <= 0.0:
+		velocity.x = horizontal * current_speed
 
 	# Remember whether we were on the floor before moving.
 	if is_on_floor():
@@ -81,7 +84,7 @@ func _physics_process(delta: float) -> void:
 		current_jump_height = debuff_jump_height
 
 	# Jump if grounded or within the coyote-time window.
-	if jump_buffer_timer > 0.0 and coyote_timer > 0.0:
+	if jump_buffer_timer > 0.0 and coyote_timer > 0.0 and obstacle_launch_timer <= 0.0:
 		velocity.y = -sqrt(2.0 * gravity * current_jump_height)
 		jump_buffer_timer = 0.0
 		coyote_timer = 0.0
@@ -89,6 +92,24 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 	_update_animation(horizontal)
+
+
+func apply_obstacle_launch(launch_velocity: Vector2, control_seconds: float = 0.28) -> void:
+	velocity = launch_velocity
+	obstacle_launch_timer = control_seconds
+	coyote_timer = 0.0
+	jump_buffer_timer = 0.0
+
+
+func reset_after_respawn() -> void:
+	velocity = Vector2.ZERO
+	obstacle_launch_timer = 0.0
+	coyote_timer = 0.0
+	jump_buffer_timer = 0.0
+	speed_boost_timer = 0.0
+	speed_debuff_timer = 0.0
+	jump_boost_timer = 0.0
+	jump_debuff_timer = 0.0
 
 
 func _update_animation(horizontal: float) -> void:
