@@ -83,7 +83,8 @@ func check_route_launch() -> void:
 	glove.rest_max_seconds = 0.5
 	root.add_child(level)
 	var player = level.player
-	player.position = Vector2(4028,55)
+	# Start on Griffin's new approach platform, below-left of the raised glove.
+	player.position = Vector2(3900,-296)
 	var jumped := false
 	var launched := false
 	for i in range(180):
@@ -94,11 +95,16 @@ func check_route_launch() -> void:
 		else:
 			Input.action_release("ui_accept")
 		if player.velocity.y < -1200.0: launched = true
-		if player.position.y < -680.0 and player.position.x > 3900.0:
+		if jumped and not launched and player.position.x < 4025.0:
+			Input.action_press("ui_right")
+		else:
+			Input.action_release("ui_right")
+		if launched and player.position.y < -680.0 and player.position.x > 3900.0:
 			Input.action_press("ui_left")
 		elif player.position.x <= 3900.0:
 			Input.action_release("ui_left")
 	Input.action_release("ui_left")
+	Input.action_release("ui_right")
 	Input.action_release("ui_accept")
 	check(launched, "Actual tutorial glove must launch the shared bunny")
 	check(player.is_on_floor() and player.position.y < -650.0 and player.position.x < 3920.0,
