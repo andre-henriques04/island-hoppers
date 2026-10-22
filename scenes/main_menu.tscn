@@ -78,6 +78,20 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_1dfpl")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qywvv")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_3wgol")
 
+[node name="CompletionStatus" type="Label" parent="MenuUI"]
+z_index = 100
+layout_mode = 0
+offset_left = 20.0
+offset_top = 18.0
+offset_right = 470.0
+offset_bottom = 62.0
+mouse_filter = 2
+text = "Tutorial complete — select Play to play again"
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+
 [node name="Clouds" type="Node2D" parent="." unique_id=894416836]
 
 [node name="Cloud1" type="Sprite2D" parent="Clouds" unique_id=96642518]
