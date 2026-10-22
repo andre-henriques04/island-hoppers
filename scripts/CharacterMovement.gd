@@ -101,6 +101,17 @@ func apply_obstacle_launch(launch_velocity: Vector2, control_seconds: float = 0.
 	jump_buffer_timer = 0.0
 
 
+func reset_after_respawn() -> void:
+	velocity = Vector2.ZERO
+	obstacle_launch_timer = 0.0
+	coyote_timer = 0.0
+	jump_buffer_timer = 0.0
+	speed_boost_timer = 0.0
+	speed_debuff_timer = 0.0
+	jump_boost_timer = 0.0
+	jump_debuff_timer = 0.0
+
+
 func _update_animation(horizontal: float) -> void:
 	if sprite == null:
 		return

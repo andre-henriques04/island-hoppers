@@ -9,6 +9,9 @@
 [ext_resource type="Script" path="res://scripts/tutorial_camera.gd" id="tutorial_camera"]
 [ext_resource type="Texture2D" uid="uid://5p5bjp8goweo" path="res://assets/player/bunny_walk_spritesheet.png" id="player_texture"]
 
+[ext_resource type="Script" path="res://scripts/tutorial_flow.gd" id="tutorial_flow"]
+[ext_resource type="Texture2D" path="res://assets/art/Npcs/Bunny_sibling_1.png" id="sibling_art"]
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0wfyh"]
 texture = ExtResource("1_o5qli")
 texture_region_size = Vector2i(128, 128)
@@ -417,17 +420,34 @@ animations = [{
 "speed": 16.0
 }]
 
+[sub_resource type="RectangleShape2D" id="sibling_goal_shape"]
+size = Vector2(128, 216)
+
 [node name="Main" type="Node2D" unique_id=263929988 node_paths=PackedStringArray("player")]
 script = ExtResource("tutorial_camera")
 player = NodePath("CharacterBody2D")
 
-[node name="SiblingTemp" type="Label" parent="." unique_id=2111450098]
-offset_left = 6091.0
-offset_top = -1329.0
-offset_right = 6227.0
-offset_bottom = -1292.0
-text = "Sibling Goes here"
-autowrap_mode = 3
+[node name="SiblingGoal" type="Area2D" parent="."]
+position = Vector2(6070, -1120)
+collision_layer = 0
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SiblingGoal"]
+position = Vector2(0, -108)
+shape = SubResource("sibling_goal_shape")
+
+[node name="Sprite2D" type="Sprite2D" parent="SiblingGoal"]
+position = Vector2(0, -93)
+scale = Vector2(0.12, 0.12)
+texture = ExtResource("sibling_art")
+
+[node name="Label" type="Label" parent="SiblingGoal"]
+offset_left = -100.0
+offset_top = -240.0
+offset_right = 100.0
+offset_bottom = -200.0
+text = "Reach your sibling"
+horizontal_alignment = 1
 
 [node name="CarrotTemp" type="Label" parent="." unique_id=2061303982]
 offset_left = 4507.0
@@ -503,3 +523,37 @@ z_index = -10
 position = Vector2(3191.5, -1639.5)
 scale = Vector2(1.54825, 1.5666666)
 texture = ExtResource("5_tbgi4")
+
+[node name="TutorialFlow" type="Node" parent="."]
+script = ExtResource("tutorial_flow")
+
+[node name="HUD" type="CanvasLayer" parent="TutorialFlow"]
+layer = 20
+
+[node name="Controls" type="Label" parent="TutorialFlow/HUD"]
+offset_left = 20.0
+offset_top = 16.0
+text = "Arrows: move   Space: jump   R: retry   Esc: home"
+mouse_filter = 2
+
+[node name="Fade" type="ColorRect" parent="TutorialFlow/HUD"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+
+[node name="Message" type="Label" parent="TutorialFlow/HUD"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_font_sizes/font_size = 34
+horizontal_alignment = 1
+vertical_alignment = 1
