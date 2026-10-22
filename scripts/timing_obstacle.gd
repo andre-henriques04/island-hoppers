@@ -20,7 +20,7 @@ const WARNING_COLOR := Color("f2c14e")
 const ACTIVE_COLOR := Color("e85d4a")
 
 @onready var pusher: Node2D = $Pusher
-@onready var visual: Polygon2D = $Pusher/Visual
+@onready var visual: CanvasItem = $Pusher/Visual
 @onready var hitbox: Area2D = $Pusher/Hitbox
 @onready var warning_light: Polygon2D = $WarningLight
 
@@ -64,7 +64,7 @@ func _run_cycle() -> void:
 
 func _set_phase(next_phase: Phase, tint: Color) -> void:
 	_phase = next_phase
-	visual.color = tint
+	visual.modulate = tint
 	warning_light.visible = next_phase == Phase.WARNING or next_phase == Phase.EXTENDED
 	warning_light.color = WARNING_COLOR if next_phase == Phase.WARNING else ACTIVE_COLOR
 
