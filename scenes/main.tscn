@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://b0fc4d7d5fwpj" path="res://assets/art/backgrouds/tutorial_background7.png" id="13_a8y0u"]
 [ext_resource type="Texture2D" uid="uid://dkfl1bwbd7xlx" path="res://assets/art/powerups/Carrot.png" id="15_jkv2x"]
 [ext_resource type="Script" uid="uid://ctdy20s51u3ho" path="res://scripts/Carrot.gd" id="16_jbj1t"]
+[ext_resource type="AudioStream" uid="uid://2snvo0dkjsu0" path="res://assets/audio/tutorial-island.ogg" id="17_muem4"]
 [ext_resource type="PackedScene" path="res://scenes/boxing_glove.tscn" id="glove_scene"]
 [ext_resource type="Script" uid="uid://dyrpsoyiwa1pv" path="res://scripts/CharacterMovement.gd" id="player_script"]
 [ext_resource type="Texture2D" uid="uid://bmcsedjoekpgu" path="res://assets/art/Npcs/Bunny_sibling_1.png" id="sibling_art"]
@@ -659,3 +660,8 @@ texture = ExtResource("15_jkv2x")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1863071619]
 position = Vector2(-2.5, -19.5)
 shape = SubResource("RectangleShape2D_t588g")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=19534881]
+stream = ExtResource("17_muem4")
+volume_db = -20.0
+autoplay = true
