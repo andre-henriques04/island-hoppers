@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/timing_obstacle.tscn" id="1_obstacle"]
+
+[node name="TimingObstacleDemo" type="Node2D"]
+
+[node name="Title" type="Label" parent="."]
+offset_left = 48.0
+offset_top = 40.0
+offset_right = 720.0
+offset_bottom = 96.0
+theme_override_font_sizes/font_size = 28
+text = "Timed obstacle prototype"
+
+[node name="Instructions" type="Label" parent="."]
+offset_left = 48.0
+offset_top = 96.0
+offset_right = 900.0
+offset_bottom = 144.0
+text = "Amber warns, red is active, green means it has retracted. The cycle timing varies."
+
+[node name="Floor" type="Polygon2D" parent="."]
+position = Vector2(0, 440)
+color = Color(0.27, 0.62, 0.35, 1)
+polygon = PackedVector2Array(0, 0, 1152, 0, 1152, 32, 0, 32)
+
+[node name="TimingObstacle" parent="." instance=ExtResource("1_obstacle")]
+position = Vector2(576, 440)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576, 324)
+enabled = true
