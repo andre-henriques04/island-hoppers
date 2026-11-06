@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dyrpsoyiwa1pv" path="res://scripts/CharacterMovement.gd" id="1_3g05n"]
 [ext_resource type="Texture2D" uid="uid://5p5bjp8goweo" path="res://assets/player/bunny_walk_spritesheet.png" id="2_2b4wq"]
 [ext_resource type="Texture2D" uid="uid://c2oyienqu4cp0" path="res://assets/art/tilesheets/CloudIslandTileSheet.png" id="3_2b4wq"]
+[ext_resource type="PackedScene" uid="uid://tqv726paxv1l" path="res://scenes/moving_platform.tscn" id="5_t5ujr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_my5p4"]
 size = Vector2(60, 144)
@@ -141,7 +142,7 @@ texture_region_size = Vector2i(128, 128)
 4:0/0 = 0
 4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-36.367184, -12.977367, 34.152138, -14.397219, 26.106308, 3.587574, 6.2283783, 8.3204155, -8.443428, 7.84713, -26.9015, 3.350933)
 5:0/0 = 0
-5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-42.74706, -10.696106, 64, -12.115959, 64, 33.972412, 22.651337, 35.392265, -23.96714, 24.270088, -38.11834, 8.803173)
+5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-44.361004, -13.281471, 64, -12.097034, 64, 33.972412, 23.941467, 34.095966, -6.4038506, 27.707996, -34.28061, 16.072998)
 6:0/0 = 0
 6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -12.194214, 64, -12.115959, 64, 33.972412, -64, 33.90618)
 7:0/0 = 0
@@ -273,6 +274,40 @@ scale = Vector2(0.37, 0.37)
 sprite_frames = SubResource("SpriteFrames_t5ujr")
 animation = &"run"
 
-[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=904313024]
-tile_map_data = PackedByteArray("AAAMAP7/AAAFAAAAAAANAP7/AAAGAAAAAAAOAP7/AAAHAAAAAAAQAP//AAABAAAAAFAQAP7/AAABAAAAAFAQAP3/AAABAAAAAFAQAPz/AAABAAAAAFAQAPv/AAABAAAAAFAOAPb/AAABAAAAAAANAPb/AAABAAAAAAAMAPb/AAABAAAAAAALAPb/AAABAAAAAAAKAPb/AAABAAAAAAAJAPb/AAABAAAAAAAIAPb/AAABAAAAAAAAAPb/AAABAAAAAAABAPb/AAABAAAAAAACAPb/AAABAAAAAAADAPb/AAABAAAAAAAEAPb/AAABAAAAAAAFAPb/AAABAAAAAAAGAPb/AAABAAAAAAAHAPb/AAABAAAAAAAPAP3/AAACAAAAAAAPAPn/AAADAAEAABAQAPn/AAACAAEAABAQAPr/AAABAAAAAFAQAPb/AAAAAAAAAFAQAPf/AAABAAAAAFAPAPb/AAABAAAAAAABAP//AAACAAEAABACAP//AAACAAEAABADAP//AAACAAEAABAEAP//AAADAAEAAAAGAPj/AAAGAAAAAAAHAPj/AAAHAAAAAAD///b/AAAAAAAAAAD///f/AAABAAAAAGD///j/AAABAAAAAGD///n/AAABAAAAAGD///r/AAABAAAAAGD///v/AAABAAAAAGD///z/AAABAAAAAGD///3/AAABAAAAAGD///7/AAABAAAAAGD/////AAABAAAAAGAAAPr/AAAEAAAAAAABAPv/AAAEAAAAAAACAPn/AAAEAAAAAAAEAPn/AAACAAAAAAAEAPv/AAACAAAAAAAFAPj/AAAFAAAAAAAAAP//AAADAAEAABAMAPv/AAAHAAAAAAANAPz/AAAEAAAAAAALAPv/AAAFAAAAAAA=")
+[node name="MainMapTiles" type="TileMapLayer" parent="." unique_id=904313024]
+tile_map_data = PackedByteArray("AAAQAP//AAABAAAAAFAQAP7/AAABAAAAAFAQAP3/AAABAAAAAFAQAPz/AAABAAAAAFAQAPv/AAABAAAAAFAOAPb/AAABAAAAAAANAPb/AAABAAAAAAAMAPb/AAABAAAAAAALAPb/AAABAAAAAAAKAPb/AAABAAAAAAAJAPb/AAABAAAAAAAIAPb/AAABAAAAAAAAAPb/AAABAAAAAAABAPb/AAABAAAAAAACAPb/AAABAAAAAAADAPb/AAABAAAAAAAEAPb/AAABAAAAAAAFAPb/AAABAAAAAAAGAPb/AAABAAAAAAAHAPb/AAABAAAAAAAPAP3/AAACAAAAAAAPAPn/AAADAAEAABAQAPn/AAACAAEAABAQAPr/AAABAAAAAFAQAPb/AAAAAAAAAFAQAPf/AAABAAAAAFAPAPb/AAABAAAAAAABAP//AAACAAEAABACAP//AAACAAEAABADAP//AAACAAEAABAEAP//AAADAAEAAAD///b/AAAAAAAAAAD///f/AAABAAAAAGD///j/AAABAAAAAGD///n/AAABAAAAAGD///r/AAABAAAAAGD///v/AAABAAAAAGD///z/AAABAAAAAGD///3/AAABAAAAAGD///7/AAABAAAAAGD/////AAABAAAAAGAAAPr/AAAEAAAAAAACAPn/AAAEAAAAAAAAAP//AAADAAEAABANAPz/AAAEAAAAAAAEAPn/AAADAAAAAAADAPv/AAAHAAAAAAACAPv/AAAGAAAAAAABAPv/AAAFAAAAAAA=")
 tile_set = SubResource("TileSet_t588g")
+use_kinematic_bodies = true
+
+[node name="MovingPlatformManager" type="Node2D" parent="." unique_id=593401996]
+
+[node name="MovingPlatform" parent="MovingPlatformManager" unique_id=1843036443 instance=ExtResource("5_t5ujr")]
+position = Vector2(1663, -129)
+direction = 1
+travel_distance = 700.0
+speed = 128.0
+endpoint_pause = 1.5
+
+[node name="MainMapTiles" parent="MovingPlatformManager/MovingPlatform" index="0" unique_id=646422281]
+tile_map_data = PackedByteArray("AAD/////AAAFAAAAAAABAP//AAAHAAAAAAAAAP//AAAGAAAAAAA=")
+
+[node name="MovingPlatform2" parent="MovingPlatformManager" unique_id=1685952216 instance=ExtResource("5_t5ujr")]
+direction = 1
+travel_distance = 500.0
+speed = 256.0
+endpoint_pause = 0.3
+
+[node name="MainMapTiles" parent="MovingPlatformManager/MovingPlatform2" index="0" unique_id=646422281]
+tile_map_data = PackedByteArray("AAALAPv/AAAFAAAAAAAMAPv/AAAHAAAAAAA=")
+
+[node name="MovingPlatform3" parent="MovingPlatformManager" unique_id=1486708651 instance=ExtResource("5_t5ujr")]
+travel_distance = 500.0
+speed = 128.0
+endpoint_pause = 0.0
+
+[node name="MainMapTiles" parent="MovingPlatformManager/MovingPlatform3" index="0" unique_id=646422281]
+tile_map_data = PackedByteArray("AAAFAPj/AAAFAAAAAAAGAPj/AAAGAAAAAAAHAPj/AAAHAAAAAAA=")
+
+[editable path="MovingPlatformManager/MovingPlatform"]
+[editable path="MovingPlatformManager/MovingPlatform2"]
+[editable path="MovingPlatformManager/MovingPlatform3"]
