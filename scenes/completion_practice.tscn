@@ -1,0 +1,8 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/main.tscn" id="tutorial"]
+
+[node name="CompletionPractice" instance=ExtResource("tutorial")]
+
+[node name="CharacterBody2D" parent="."]
+position = Vector2(5930, -1193)

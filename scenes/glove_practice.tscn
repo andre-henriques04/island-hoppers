@@ -1,0 +1,53 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/glove_practice.gd" id="script"]
+[ext_resource type="PackedScene" path="res://scenes/boxing_glove.tscn" id="glove"]
+
+[sub_resource type="RectangleShape2D" id="floor"]
+size = Vector2(1700, 60)
+
+[sub_resource type="RectangleShape2D" id="target"]
+size = Vector2(300, 30)
+
+[node name="GlovePractice" type="Node2D"]
+script = ExtResource("script")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576, 100)
+zoom = Vector2(0.55, 0.55)
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(576, 630)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+shape = SubResource("floor")
+
+[node name="Visual" type="Polygon2D" parent="Floor"]
+color = Color(0.25, 0.55, 0.28, 1)
+polygon = PackedVector2Array(-850, -30, 850, -30, 850, 30, -850, 30)
+
+[node name="Target" type="StaticBody2D" parent="."]
+position = Vector2(400, -240)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Target"]
+shape = SubResource("target")
+one_way_collision = true
+
+[node name="Visual" type="Polygon2D" parent="Target"]
+color = Color(0.35, 0.7, 0.4, 1)
+polygon = PackedVector2Array(-150, -15, 150, -15, 150, 15, -150, 15)
+
+[node name="UpwardGlove" parent="." instance=ExtResource("glove")]
+position = Vector2(400, 530)
+
+[node name="SidewaysGlove" parent="." instance=ExtResource("glove")]
+position = Vector2(1000, 500)
+rotation = 4.712389
+launch_speed = 720.0
+
+[node name="Instructions" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="Instructions"]
+offset_left = 24.0
+offset_top = 16.0
+text = "GLOVE PRACTICE | Arrows: move | Space: jump | R: reset\nAmber warns; only the extended glove launches. Ride the left glove to the high platform.\nThe right glove punches left. Rest and recovery are safe."

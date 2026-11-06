@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://chtxkpmhdi5cu"
-path="res://.godot/imported/HomeScreenNoUINoClouds.png-d6573c903410dabd27fcd48f789c8ec8.ctex"
+uid="uid://nurk2lolu4cb"
+path="res://.godot/imported/tutorial_background2.png-27a839ccaac6f8c5a4a351c8a3d79755.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/HomeScreen/HomeScreenNoUINoClouds.png"
-dest_files=["res://.godot/imported/HomeScreenNoUINoClouds.png-d6573c903410dabd27fcd48f789c8ec8.ctex"]
+source_file="res://assets/art/backgrouds/tutorial_background2.png"
+dest_files=["res://.godot/imported/tutorial_background2.png-27a839ccaac6f8c5a4a351c8a3d79755.ctex"]
 
 [params]
 

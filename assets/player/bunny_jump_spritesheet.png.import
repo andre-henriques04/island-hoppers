@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cdnhesh8p1or4"
-path="res://.godot/imported/HomeScreenCloudsTexture.png-6de05c32100c27f62b65f333abf0410c.ctex"
+uid="uid://bkgnrdsrdoxdo"
+path="res://.godot/imported/bunny_jump_spritesheet.png-3c0a4ea21494dc52889e7533acda346b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/HomeScreen/HomeScreenCloudsTexture.png"
-dest_files=["res://.godot/imported/HomeScreenCloudsTexture.png-6de05c32100c27f62b65f333abf0410c.ctex"]
+source_file="res://assets/player/bunny_jump_spritesheet.png"
+dest_files=["res://.godot/imported/bunny_jump_spritesheet.png-3c0a4ea21494dc52889e7533acda346b.ctex"]
 
 [params]
 

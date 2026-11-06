@@ -1,0 +1,32 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/boxing_glove.gd" id="script"]
+[ext_resource type="SpriteFrames" path="res://assets/art/spritesheets/boxing_glove_frames.tres" id="frames"]
+
+[sub_resource type="RectangleShape2D" id="hit_shape"]
+size = Vector2(112, 156)
+
+[node name="BoxingGlove" type="Node2D"]
+script = ExtResource("script")
+active_seconds = 0.12
+extend_seconds = 0.12
+retract_seconds = 0.75
+
+[node name="WarningLight" type="Polygon2D" parent="."]
+visible = false
+position = Vector2(0, -210)
+polygon = PackedVector2Array(-9, 0, 0, -13, 9, 0, 0, 13)
+
+[node name="Pusher" type="Node2D" parent="."]
+
+[node name="Visual" type="AnimatedSprite2D" parent="Pusher"]
+sprite_frames = ExtResource("frames")
+
+[node name="Hitbox" type="Area2D" parent="Pusher"]
+position = Vector2(0, -92)
+collision_layer = 0
+collision_mask = 1
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pusher/Hitbox"]
+shape = SubResource("hit_shape")
