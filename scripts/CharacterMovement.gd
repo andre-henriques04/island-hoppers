@@ -19,6 +19,7 @@ extends CharacterBody2D
 @export var max_floor_angle: float = 50.0
 @export var snap_length: float = 8.0
 
+
 # =========================================================
 # JUMP RESPONSIVENESS
 # =========================================================
@@ -29,14 +30,17 @@ extends CharacterBody2D
 var coyote_timer: float = 0.0
 var jump_buffer_timer: float = 0.0
 
+
 # =========================================================
 # POWER-UP TIMERS
 # =========================================================
 
 var speed_boost_timer: float = 0.0
 var speed_debuff_timer: float = 0.0
+
 var jump_boost_timer: float = 0.0
 var jump_debuff_timer: float = 0.0
+
 
 # =========================================================
 # DASH ABILITY
@@ -44,10 +48,20 @@ var jump_debuff_timer: float = 0.0
 
 @export var dash_speed: float = 650.0
 @export var dash_duration: float = 0.20
+@export var ground_dash_cooldown: float = 0.15
 
+# Permanent ownership.
+var dash_unlocked: bool = false
+
+# Dash state.
 var dash_active: bool = false
 var dash_timer: float = 0.0
 var dash_direction: float = 1.0
+
+# Usage restrictions.
+var air_dash_used: bool = false
+var ground_dash_cooldown_timer: float = 0.0
+
 
 # =========================================================
 # GLIDE ABILITY
@@ -57,15 +71,21 @@ var dash_direction: float = 1.0
 @export var glide_gravity_multiplier: float = 0.25
 @export var glide_max_fall_speed: float = 100.0
 
+# Permanent ownership.
+var glide_unlocked: bool = false
+
+# Glide state.
 var glide_available: bool = false
 var glide_active: bool = false
 var glide_timer: float = 0.0
+
 
 # =========================================================
 # OBSTACLE LAUNCH
 # =========================================================
 
 var obstacle_launch_timer: float = 0.0
+
 
 # =========================================================
 # CHECKPOINT / DEATH SYSTEM
@@ -77,15 +97,23 @@ var spawn_position: Vector2
 var is_dead: bool = false
 
 
+# =========================================================
+# INITIALIZATION
+# =========================================================
+
 func _ready() -> void:
+
 	up_direction = Vector2.UP
 	floor_max_angle = deg_to_rad(max_floor_angle)
 	floor_snap_length = snap_length
 	floor_constant_speed = true
 
-	# Save the initial spawn position.
 	spawn_position = global_position
 
+
+# =========================================================
+# MAIN PHYSICS
+# =========================================================
 
 func _physics_process(delta: float) -> void:
 
@@ -93,11 +121,29 @@ func _physics_process(delta: float) -> void:
 		return
 
 	# -----------------------------------------------------
+	# DEBUG UNLOCKS - REMOVE BEFORE FINAL BUILD
+	# -----------------------------------------------------
+
+	if Input.is_key_pressed(KEY_9):
+		unlock_dash()
+
+	if Input.is_key_pressed(KEY_0):
+		unlock_glide()
+
+	# -----------------------------------------------------
+	# DASH INPUT
+	# -----------------------------------------------------
+
+	if Input.is_action_just_pressed("dash"):
+		activate_dash()
+
+	# -----------------------------------------------------
 	# POWER-UP TIMERS
 	# -----------------------------------------------------
 
 	speed_boost_timer = maxf(speed_boost_timer - delta, 0.0)
 	speed_debuff_timer = maxf(speed_debuff_timer - delta, 0.0)
+
 	jump_boost_timer = maxf(jump_boost_timer - delta, 0.0)
 	jump_debuff_timer = maxf(jump_debuff_timer - delta, 0.0)
 
@@ -115,12 +161,22 @@ func _physics_process(delta: float) -> void:
 	if speed_debuff_timer > 0.0:
 		current_speed = debuffed_speed
 
-	# Dash takes priority over normal horizontal movement.
+	# Dash timers.
 	dash_timer = maxf(dash_timer - delta, 0.0)
+
+	ground_dash_cooldown_timer = maxf(
+		ground_dash_cooldown_timer - delta,
+		0.0
+	)
+
 	dash_active = dash_timer > 0.0
 
-	obstacle_launch_timer = maxf(obstacle_launch_timer - delta, 0.0)
+	obstacle_launch_timer = maxf(
+		obstacle_launch_timer - delta,
+		0.0
+	)
 
+	# Apply horizontal movement.
 	if dash_active:
 		velocity.x = dash_direction * dash_speed
 
@@ -128,14 +184,27 @@ func _physics_process(delta: float) -> void:
 		velocity.x = horizontal * current_speed
 
 	# -----------------------------------------------------
-	# COYOTE TIME
+	# COYOTE TIME / LANDING RESET
 	# -----------------------------------------------------
 
 	if is_on_floor():
+
 		coyote_timer = coyote_time
+
+		# Restore air dash.
+		air_dash_used = false
+
+		# Restore glide.
+		glide_available = glide_unlocked
 		glide_active = false
+		glide_timer = 0.0
+
 	else:
-		coyote_timer = maxf(coyote_timer - delta, 0.0)
+
+		coyote_timer = maxf(
+			coyote_timer - delta,
+			0.0
+		)
 
 	# -----------------------------------------------------
 	# JUMP BUFFERING
@@ -143,23 +212,49 @@ func _physics_process(delta: float) -> void:
 
 	if Input.is_action_just_pressed("ui_accept"):
 		jump_buffer_timer = jump_buffer_time
-	else:
-		jump_buffer_timer = maxf(jump_buffer_timer - delta, 0.0)
 
+	else:
+		jump_buffer_timer = maxf(
+			jump_buffer_timer - delta,
+			0.0
+		)
+	
 	# -----------------------------------------------------
 	# GLIDE MECHANIC
 	# -----------------------------------------------------
 
-	if not is_on_floor() and glide_available:
-		if Input.is_action_pressed("ui_accept") and velocity.y > 0.0:
-			if not glide_active:
-				glide_active = true
-				glide_timer = glide_duration
+	if is_on_floor():
 
+		# Restore glide upon landing.
+		glide_available = glide_unlocked
+		glide_active = false
+		glide_timer = 0.0
+
+	elif glide_unlocked and glide_available:
+
+		# Start or resume gliding while falling.
+		if Input.is_action_pressed("ui_accept") and velocity.y > 0.0:
+
+			if not glide_active:
+
+				# Only initialize the timer if this is
+				# a completely new glide session.
+				if glide_timer <= 0.0:
+					glide_timer = glide_duration
+
+				glide_active = true
+
+		# Stop gliding when Space is released.
+		else:
+			glide_active = false
+
+	# Only consume time while actively gliding.
 	if glide_active:
 		glide_timer = maxf(glide_timer - delta, 0.0)
 
+		# Glide duration exhausted.
 		if glide_timer <= 0.0:
+
 			glide_active = false
 			glide_available = false
 
@@ -170,10 +265,16 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 
 		if glide_active:
+
 			velocity.y += gravity * glide_gravity_multiplier * delta
-			velocity.y = minf(velocity.y, glide_max_fall_speed)
+
+			velocity.y = minf(
+				velocity.y,
+				glide_max_fall_speed
+			)
 
 		else:
+
 			velocity.y += gravity * delta
 
 	# -----------------------------------------------------
@@ -197,7 +298,9 @@ func _physics_process(delta: float) -> void:
 	and obstacle_launch_timer <= 0.0 \
 	and not dash_active:
 
-		velocity.y = -sqrt(2.0 * gravity * current_jump_height)
+		velocity.y = -sqrt(
+			2.0 * gravity * current_jump_height
+		)
 
 		jump_buffer_timer = 0.0
 		coyote_timer = 0.0
@@ -213,31 +316,94 @@ func _physics_process(delta: float) -> void:
 
 func activate_dash() -> void:
 
+	if not dash_unlocked:
+		return
+
 	if dash_active or is_dead:
 		return
 
+	if obstacle_launch_timer > 0.0:
+		return
+
+	var on_ground := is_on_floor()
+
+	# Ground cooldown.
+	if on_ground and ground_dash_cooldown_timer > 0.0:
+		return
+
+	# One dash per airborne period.
+	if not on_ground and air_dash_used:
+		return
+
+	# Determine direction.
 	var direction := Input.get_axis("ui_left", "ui_right")
 
 	if direction != 0.0:
-		dash_direction = signf(direction)
-	else:
-		dash_direction = 1.0
 
+		dash_direction = signf(direction)
+
+	else:
+
+		if sprite != null and sprite.flip_h:
+			dash_direction = -1.0
+		else:
+			dash_direction = 1.0
+
+	# Start dash.
 	dash_active = true
 	dash_timer = dash_duration
 
 	velocity.x = dash_direction * dash_speed
 
+	# Apply restrictions.
+	if on_ground:
+
+		ground_dash_cooldown_timer = ground_dash_cooldown
+
+	else:
+
+		air_dash_used = true
+
 
 # =========================================================
-# GLIDE POWER-UP ACTIVATION
+# DASH UNLOCK
 # =========================================================
 
-func activate_glide() -> void:
+func unlock_dash() -> void:
+
+	if dash_unlocked:
+		return
+
+	dash_unlocked = true
+
+	print("Dash ability permanently unlocked!")
+
+
+# =========================================================
+# GLIDE UNLOCK
+# =========================================================
+
+func unlock_glide() -> void:
+
+	if glide_unlocked:
+		return
+
+	glide_unlocked = true
 
 	glide_available = true
 	glide_active = false
 	glide_timer = 0.0
+
+	print("Glide ability permanently unlocked!")
+
+
+# =========================================================
+# GLIDE PICKUP ACTIVATION
+# =========================================================
+
+func activate_glide() -> void:
+
+	unlock_glide()
 
 
 # =========================================================
@@ -250,7 +416,9 @@ func apply_obstacle_launch(
 ) -> void:
 
 	velocity = launch_velocity
+
 	obstacle_launch_timer = control_seconds
+
 	coyote_timer = 0.0
 	jump_buffer_timer = 0.0
 
@@ -278,22 +446,27 @@ func die() -> void:
 	is_dead = true
 
 	velocity = Vector2.ZERO
+
 	set_physics_process(false)
 
-	# Play the death animation if one exists.
+	# Death animation.
 	if sprite != null and sprite.sprite_frames != null:
+
 		if sprite.sprite_frames.has_animation("death"):
 			sprite.play("death")
 
-	# Allow time for the death animation.
-	await get_tree().create_timer(death_animation_duration).timeout
+	# Wait for animation.
+	await get_tree().create_timer(
+		death_animation_duration
+	).timeout
 
-	# Return to the most recently saved checkpoint.
+	# Respawn at checkpoint.
 	global_position = spawn_position
 
 	reset_after_respawn()
 
 	is_dead = false
+
 	set_physics_process(true)
 
 
@@ -312,18 +485,27 @@ func reset_after_respawn() -> void:
 	jump_boost_timer = 0.0
 	jump_debuff_timer = 0.0
 
+	# Reset dash state, NOT ownership.
 	dash_active = false
 	dash_timer = 0.0
+	air_dash_used = false
+	ground_dash_cooldown_timer = 0.0
 
-	glide_available = false
+	# Reset glide state, NOT ownership.
+	glide_available = glide_unlocked
 	glide_active = false
 	glide_timer = 0.0
 
+	# Reset animation.
 	if sprite != null:
+
 		if sprite.sprite_frames != null \
 		and sprite.sprite_frames.has_animation("idle"):
+
 			sprite.play("idle")
+
 		else:
+
 			sprite.stop()
 
 
@@ -338,17 +520,24 @@ func _update_animation(horizontal: float) -> void:
 
 	if horizontal < 0.0:
 		sprite.flip_h = true
+
 	elif horizontal > 0.0:
 		sprite.flip_h = false
 
 	if horizontal != 0.0:
+
 		if sprite.animation != "run" or not sprite.is_playing():
 			sprite.play("run")
+
 	else:
+
 		if sprite.sprite_frames != null \
 		and sprite.sprite_frames.has_animation("idle"):
+
 			sprite.play("idle")
+
 		else:
+
 			sprite.stop()
 
 
@@ -357,10 +546,12 @@ func _update_animation(horizontal: float) -> void:
 # =========================================================
 
 func activate_speed_boost() -> void:
+
 	speed_boost_timer = 20.0
 
 
 func activate_speed_debuff() -> void:
+
 	speed_debuff_timer = 10.0
 
 
@@ -369,8 +560,10 @@ func activate_speed_debuff() -> void:
 # =========================================================
 
 func activate_jump_boost() -> void:
+
 	jump_boost_timer = 20.0
 
 
 func activate_jump_debuff() -> void:
+
 	jump_debuff_timer = 15.0
