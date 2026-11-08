@@ -20,11 +20,14 @@ boxing-glove scene. Normal route access still depends on the pending pickup and
 completion work; this PR does not claim a complete tutorial playthrough.
 
 For a quick route-specific check, pause and use Remote Inspector to place
-CharacterBody2D at `(4028, 55)`, then resume. Stand beneath the upward glove.
-Jump when its amber warning first appears. During the launch, steer left once
+CharacterBody2D at `(3900, -296)`, then resume on the approach platform.
+Jump right toward the raised glove when its amber warning first appears.
+Stop moving right when aligned with the glove (around x=4027).
+During the launch, steer left once
 above the first ledge to land on it (around x=3900, y=-680). This uses the actual
 60×144 bunny collider and unchanged tutorial terrain. Merely walking under the
-raised glove does not reach its fist: the timed jump is intentional.
+raised glove from the lowest floor does not reach its fist: use the approach
+platform and the timed jump.
 
 The other glove, near `(3664, -1729)`, faces left. It warns, punches left with
 an upward assist, then recovers. Neither glove is lethal.

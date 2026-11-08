@@ -2,36 +2,53 @@
 
 Island Hoppers is a 2D, side-view, single-player puzzle platformer about a bunny searching across islands for three lost siblings. The intended experience combines exploration, platforming, puzzles, and sibling rescues, with rescued siblings eventually unlocking abilities.
 
-## Project status — End of Sprint 1
+## Project status - Sprint 2 tutorial
 
-Sprint 1 established a **playable local prototype** in Godot. The shared project now brings together bunny movement, jumping, collision, walking animation, and a tutorial platform layout.
+Sprint 2 connected the tutorial into a playable local experience: main menu,
+five camera views with backtracking, timed boxing-glove launches, a speed carrot,
+sibling rescue, retry/fall recovery, and replay. Updated animations, backgrounds,
+and music are integrated. The game remains a prototype; Cloud Island is separate
+work and the complete game is not production-ready.
 
-The project is still a prototype. A complete tutorial playthrough, sibling-rescue objective, and browser release remain in development.
+**Documentation follow-up: November 2, 2026.** This update describes the Sprint 2
+implementation and a fresh audit of main at `28a03ba`. It is not a claim that
+these documentation changes were published during the sprint.
 
-### What is currently implemented
+### Feature ownership and scope
 
-- **Shared Godot project:** project configuration, repository structure, and developer instructions.
-- **Playable bunny:** horizontal movement, grounded jumping, gravity, platform collision, facing direction, and walking animation.
-- **Tutorial environment:** platform tiles, collision geometry, background artwork, and a layout spanning multiple planned screens.
-- **Timed-obstacle prototype:** a reusable component with configurable resting, warning, extension, and retraction phases, randomized waiting intervals, visual feedback, and a contact signal.
-- **Supporting assets and behavior:** home-screen and island-map artwork, boxing-glove animation assets, and scripts for speed and jump boosts/debuffs.
+- Andre: tutorial baseline integration (PR #18), camera progression (IS-55,
+  PRs #19/#20), interactive gloves (IS-54, PR #21), and sibling rescue,
+  retry/fall recovery and replay (IS-56, PR #22).
+- Griffin: menu, layout, slope changes, later player-height fixes (IS-68,
+  PR #23) and final demo integration (IS-69, PR #26), including animation,
+  carrot and music integration.
+- Alexa: player animations and sibling artwork; Caleb: power-up behavior;
+  Yaritza: background/map artwork and published team meeting summaries.
 
-### Integration limits
+See [tutorial architecture and decisions](docs/architecture/tutorial-systems.md)
+for implementation rationale, tradeoffs, evidence links and individual credit.
 
-Some components exist in the repository but are not yet connected to a complete gameplay flow:
+### Remaining work and known limitations
 
-- The timed-obstacle behavior runs in a **separate preview scene**. It is not connected to the playable tutorial route and does not yet apply player knockback.
-- Boxing-glove visuals in the main scene do not establish a completed interactive obstacle.
-- Power-up scripts exist, but pickups are not yet placed in the playable level.
-- Home-screen and island-map artwork are available; a complete menu/navigation flow is not implemented in the current main scene.
-- Camera progression between tutorial screens, checkpoints, recovery after falling, sibling rescue, and island completion remain unfinished.
-- **No browser test build has been completed or published.** Run the prototype locally using Godot.
+- No verified browser release (IS-25 remains To Do). Run locally in Godot.
+- Shared island selection/unlocks and permanent saves are not implemented.
+  Rescue returns to the existing home screen; completion lasts for the session.
+- Retry uses the entrance unless a checkpoint is registered through
+  `TutorialFlow.set_checkpoint(world_position)`. Visible checkpoints and the
+  additional abilities in PR #24 are not integrated into main.
+- Cloud Island PRs #13/#14/#17/#27 remain open. A Done Jira card alone does
+  not establish that its branch is merged into the playable main project.
+- The November 2 completion/retry suite reports PASS, with resource-cleanup
+  warnings. The glove suite fails a scripted ledge-landing expectation after
+  later level changes. The glove practice script/check and completion practice
+  scene still reference the former `CharacterBody2D` node name; main now uses
+  `PlayerCharacter`. Treat these practice shortcuts as requiring repair.
+- The fixed logical viewport from PR #19 was removed during PR #26. Recheck
+  window sizing and camera coverage; do not rely on the old resize guarantee.
 
-### What we are building toward
-
-The next priority is a complete tutorial loop: enter the level, navigate its challenges, recover from mistakes, rescue a sibling, and reach a clear ending.
-
-Further work includes connecting obstacles and power-ups, implementing camera progression and checkpoints, completing navigation, and verifying browser export. Additional islands, sibling switching, and ability-based puzzles are part of the longer-term direction. Exact scope and ownership are tracked in Jira.
+The demo script and October 25 retrospective describe a connected tutorial
+playthrough. The current audit reran targeted checks; it does not replace a
+fresh uninterrupted manual route test.
 
 ## Requirements
 
@@ -90,39 +107,51 @@ Godot may not show `project.godot` in its FileSystem dock because that dock focu
 
 ## Run the prototype
 
-### Main playable scene
+### Main playable flow
 
-The configured starting scene is:
-
-```text
-res://scenes/main.tscn
-```
-
-Click **Run Project** in the editor. If Godot asks you to choose a main scene, select `scenes/main.tscn`.
-
-The main scene opens the tutorial platform environment directly. It includes the bunny controller, platform collision, animation, and background artwork.
+The configured starting scene is `res://scenes/main_menu.tscn`.
+Choose **Run Project**, then **Play** to enter `scenes/main.tscn`.
 
 | Action | Control |
 |---|---|
 | Move left/right | Left/right arrow keys |
 | Jump while grounded | Space |
-| Stop and restart after falling or leaving the playable area | Use the editor's Stop and Run Project buttons |
+| Retry the tutorial | R |
+| Return to the home screen | Esc |
 
-The controller currently uses Godot's `ui_left`, `ui_right`, and `ui_accept` input actions. Check **Project → Project Settings → Input Map** if changing the controls.
+The controller uses `ui_left`, `ui_right` and `ui_accept` for movement/jump.
+R and Esc are handled by the tutorial flow script. Falling below or outside
+the map triggers recovery. Retry clears velocity, glove launch state and
+temporary movement effects, then synchronizes the camera.
 
-Automatic respawning and checkpoint recovery are not implemented yet. Camera progression is also unfinished, so the full layout is not yet a continuous playable route.
+The five fixed cameras follow authored section boundaries and allow backtracking.
+Amber glove warnings precede active directional punches; wait for a safe attempt.
+The carrot gives a temporary speed boost. Reaching the sibling shows rescue
+feedback, records session completion and returns home. Play starts a new run.
 
-### Timed-obstacle preview
+### Focused checks
 
-To inspect the reusable timing behavior independently:
+- [Camera progression and backtracking](docs/testing/tutorial-camera.md) - IS-55.
+- [Glove timing and launch](docs/testing/tutorial-glove.md) - IS-54.
+- [Completion, retry and replay](docs/testing/tutorial-completion.md) - IS-56.
 
-1. Open `scenes/timing_obstacle_demo.tscn` in Godot.
-2. Choose **Run Current Scene**.
-3. Observe the obstacle's warning, extension, active interval, retraction, and randomized wait cycle.
+Those guides retain their original feature-development context. The November 2
+audit notes above and [follow-up checklist](docs/sprint-2-follow-up.md) supersede
+outdated pending-work statements. Use `PlayerCharacter` in the Remote Inspector.
 
-The reusable component is `scenes/timing_obstacle.tscn`, with behavior in `scripts/timing_obstacle.gd`.
+The original timing-only preview remains available: open
+`scenes/timing_obstacle_demo.tscn` and choose **Run Current Scene**. This demonstrates
+the reusable timing cycle, separately from the integrated tutorial glove.
 
-This preview demonstrates the timing component rather than player interaction or a completed tutorial obstacle.
+Existing automated checks can be run from the repository root:
+
+```bash
+godot --headless --path . --fixed-fps 60 --script tests/tutorial_flow_checks.gd
+godot --headless --path . --fixed-fps 60 --script tests/glove_checks.gd
+```
+
+The latter is currently known to fail; see the specific regression findings above.
+Do not interpret an import completing as proof that the game or every check passes.
 
 ## How Godot files fit together
 
@@ -139,7 +168,7 @@ Paths beginning with `res://` are relative to the project root. For example, `re
 
 The character controller reads keyboard input and updates movement. Godot's physics system handles gravity and collision with platforms. The animated sprite displays movement and facing direction, while the camera determines the visible part of the level.
 
-Obstacle and power-up components are being developed separately and will connect to this flow as their integration is completed.
+The tutorial glove calls the shared controller launch method; its temporary launch lock preserves the impulse. The carrot calls the speed-boost method. TutorialFlow handles retry and completion, while session_progress.gd shares completion state with the menu. See the architecture guide for the component boundaries and tradeoffs.
 
 ## Repository layout
 
@@ -151,11 +180,17 @@ island-hoppers/
 ├── README.md
 ├── .gitignore
 ├── scenes/
+│   ├── main_menu.tscn
 │   ├── main.tscn
+│   ├── boxing_glove.tscn
 │   ├── timing_obstacle.tscn
 │   └── timing_obstacle_demo.tscn
 ├── scripts/
 │   ├── CharacterMovement.gd
+│   ├── tutorial_camera.gd
+│   ├── tutorial_flow.gd
+│   ├── session_progress.gd
+│   ├── boxing_glove.gd
 │   ├── timing_obstacle.gd
 │   ├── Carrot.gd
 │   ├── SpoiledFood1.gd
@@ -198,13 +233,15 @@ Git tracks saved files and their history. GitHub hosts the shared repository. Go
 8. Have a teammate review or test the change before merging.
 9. Update the Jira ticket with the PR link, validation, and accurate status.
 
-For a task identified as `IS-XX`, a branch might be:
+Use the course convention: `ticket-key-type-short-description`. Examples of types are `feature`, `bugfix`, `docs` and `integration`. For example:
 
 ```bash
-git switch -c IS-XX-short-description
+git switch -c IS-56-docs-sprint-2-features
 ```
 
-Replace `IS-XX` with the actual ticket key. Include that key in the PR title or description so the work is traceable.
+Use the actual ticket key and scope. Include the key in the PR title and description. Keep the original names of already merged branches as historical evidence; the new convention applies to new work.
+
+Every PR should explain the behavior changed, link the ticket, identify dependencies, record the checks actually run, and give reviewers a short test procedure and areas to inspect. Request a teammate review before merging. Reviewers should leave specific observations and say whether they inspected code, ran targeted checks, or played the full route. Respond to actual feedback and record how it was addressed; a merge alone does not demonstrate a written review.
 
 Commit scenes, scripts, artwork, relevant resource metadata, and intentional project-setting changes. Leave generated caches and unrelated local files out of the commit.
 
@@ -218,10 +255,14 @@ Coordinate before editing the same scene or script. Agree on scene ownership, as
 - State which features are complete and which are still separate prototypes.
 - Record any remaining work or known limitations in Jira.
 
-Sprint 1 validation relied on manual Godot testing and team smoke tests. This repository does not currently include an automated test suite or a verified browser build.
+Sprint 2 added targeted glove and completion/retry checks, alongside manual team testing. Current test results and limitations are recorded above; there is no verified browser build.
+
+A [pull request template](.github/PULL_REQUEST_TEMPLATE.md) records scope, validation and reviewer focus. These process additions were made after Sprint 2 and do not imply historical review comments existed.
 
 ## Project tracking and documentation
 
+- [Sprint 2 tutorial feature architecture](docs/architecture/tutorial-systems.md)
+- [Confluence tutorial features and architecture decisions](https://txst-fall26-cs3398-009-team04.atlassian.net/wiki/spaces/I/pages/28114945/Sprint+2+-+Tutorial+Features+and+Architecture+Decisions)
 - [GitHub repository and pull requests](https://github.com/andre-henriques04/island-hoppers)
 - [Jira board](https://txst-fall26-cs3398-009-team04.atlassian.net/jira/software/projects/IS/boards/3)
 - [Product overview and onboarding](https://txst-fall26-cs3398-009-team04.atlassian.net/wiki/spaces/I/pages/4980738/Island+Hoppers+Onboarding)

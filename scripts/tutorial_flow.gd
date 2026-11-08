@@ -11,7 +11,7 @@ const MENU := "res://scenes/main_menu.tscn"
 @export var completion_seconds := 1.4
 
 @onready var level: Node2D = get_parent()
-@onready var player: CharacterBody2D = level.get_node("CharacterBody2D")
+@onready var player: CharacterBody2D = level.get_node("PlayerCharacter")
 @onready var goal: Area2D = level.get_node("SiblingGoal")
 @onready var message: Label = $HUD/Message
 @onready var fade: ColorRect = $HUD/Fade
