@@ -13,8 +13,8 @@
 [ext_resource type="Script" uid="uid://ctdy20s51u3ho" path="res://scripts/Carrot.gd" id="16_jbj1t"]
 [ext_resource type="AudioStream" uid="uid://2snvo0dkjsu0" path="res://assets/audio/tutorial-island.ogg" id="17_muem4"]
 [ext_resource type="PackedScene" path="res://scenes/boxing_glove.tscn" id="glove_scene"]
-[ext_resource type="Script" uid="uid://dyrpsoyiwa1pv" path="res://scripts/CharacterMovement.gd" id="player_script"]
-[ext_resource type="Texture2D" uid="uid://bmcsedjoekpgu" path="res://assets/art/Npcs/Bunny_sibling_1.png" id="sibling_art"]
+[ext_resource type="Script" uid="uid://b3327ynewmroj" path="res://scripts/CharacterMovement.gd" id="player_script"]
+[ext_resource type="Texture2D" uid="uid://bcbu6h5jt25l4" path="res://assets/art/Npcs/Bunny_sibling_1.png" id="sibling_art"]
 [ext_resource type="Script" uid="uid://mlr8pdmehvj8" path="res://scripts/tutorial_camera.gd" id="tutorial_camera"]
 [ext_resource type="Script" uid="uid://dpmvl6v4eqxu6" path="res://scripts/tutorial_flow.gd" id="tutorial_flow"]
 
@@ -541,6 +541,7 @@ position = Vector2(4027, -315)
 position = Vector2(233, -313)
 script = ExtResource("player_script")
 sprite = NodePath("AnimatedSprite2D")
+idle_delay = 0.2
 walk_duration = 0.7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerCharacter" unique_id=515727343]

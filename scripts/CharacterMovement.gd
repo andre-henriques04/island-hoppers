@@ -77,6 +77,7 @@ var dash_unlocked: bool = false
 var dash_active: bool = false
 var dash_timer: float = 0.0
 var dash_direction: float = 1.0
+var dash_was_airborne: bool = false
 
 # Usage restrictions.
 var air_dash_used: bool = false
@@ -146,6 +147,12 @@ func _physics_process(delta: float) -> void:
 
 	if Input.is_action_just_pressed("dash"):
 		activate_dash()
+		
+	if Input.is_key_pressed(KEY_9):
+		unlock_dash()
+	
+	if Input.is_key_pressed(KEY_0):
+		unlock_glide()
 
 	# -----------------------------------------------------
 	# POWER-UP TIMERS
@@ -237,25 +244,8 @@ func _physics_process(delta: float) -> void:
 	# -----------------------------------------------------
 	# GLIDE MECHANIC
 	# -----------------------------------------------------
-
-	if not is_on_floor() and glide_unlocked and glide_available:
-
-		# Start or resume gliding while falling.
-		if Input.is_action_pressed("ui_accept") and velocity.y > 0.0:
-
-			if not glide_active:
-
-				# Only initialize the timer for a new glide.
-				if glide_timer <= 0.0:
-					glide_timer = glide_duration
-
-				glide_active = true
-
-		# Stop gliding when jump is released.
-		else:
-
-			glide_active = false
-
+	
+	
 	# Only consume time while actively gliding.
 	if glide_active:
 
@@ -464,6 +454,12 @@ func activate_dash() -> void:
 
 	velocity.x = dash_direction * dash_speed
 
+	# Reset vertical momentum when dashing in the air.
+	dash_was_airborne = not on_ground
+
+	if dash_was_airborne:
+		velocity.y = 0.0
+
 	# Apply restrictions.
 	if on_ground:
 
@@ -630,6 +626,14 @@ func reset_after_respawn() -> void:
 
 			sprite.stop()
 
+
+func reset_dash() -> void:
+
+	# Restore the ability to dash in midair.
+	air_dash_used = false
+
+	# Remove the ground dash cooldown.
+	ground_dash_cooldown_timer = 0.0
 
 # =========================================================
 # SPEED POWER-UPS
