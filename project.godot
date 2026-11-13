@@ -11,8 +11,12 @@ config_version=5
 [application]
 
 config/name="Island Hoppers"
-run/main_scene="uid://c8bh8i5uqyo3g"
+run/main_scene="uid://b023m3a8jg1na"
 config/features=PackedStringArray("4.7")
+
+[autoload]
+
+MusicManager="*uid://c1x3amj3txxoo"
 
 [display]
 
