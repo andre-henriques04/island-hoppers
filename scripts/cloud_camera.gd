@@ -10,7 +10,10 @@ extends Node2D
 	$"Camera (Screen 2)",
 	$"Camera (Screen 3)",
 	$"Camera (Screen 4)",
-	$"Camera (Screen 5)"
+	$"Camera (Screen 5)",
+	$"Camera (Screen 6)",
+	$"Camera (Screen 7)",
+	$"Camera (Screen 8)"
 ]
 
 var active_screen := -1
