@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/fox_boss_practice.gd" id="manager"]
+[ext_resource type="PackedScene" path="res://scenes/fox_boss.tscn" id="boss"]
+[node name="FoxEncounter" type="Node2D"]
+script = ExtResource("manager")
+automatic_start = false
+left_bound = 6480.0
+right_bound = 8270.0
+floor_height = -230.0
+boss_spawn = Vector2(7770, -275)
+player_spawn = Vector2(6820, -305)
+[node name="Fox" parent="." instance=ExtResource("boss")]
+[node name="Instructions" type="CanvasLayer" parent="."]
+layer = 30
+[node name="Panel" type="ColorRect" parent="Instructions"]
+offset_right = 1152.0
+offset_bottom = 100.0
+color = Color(0.04, 0.04, 0.07, 0.88)
+mouse_filter = 2
+[node name="Label" type="Label" parent="Instructions"]
+offset_left = 24.0
+offset_top = 16.0

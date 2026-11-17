@@ -20,6 +20,8 @@
 [ext_resource type="Script" uid="uid://03qu1mm7aen3" path="res://scripts/sceneMusic.gd" id="18_llimk"]
 [ext_resource type="AudioStream" uid="uid://cs5d1fqunfg10" path="res://assets/audio/WitchIsland.ogg" id="19_2crjm"]
 
+[ext_resource type="PackedScene" path="res://scenes/fox_encounter.tscn" id="fox_encounter"]
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eie05"]
 texture = ExtResource("3_eie05")
 texture_region_size = Vector2i(128, 128)
@@ -866,5 +868,8 @@ metadata/_edit_lock_ = true
 script = ExtResource("18_llimk")
 music = ExtResource("19_2crjm")
 volume_db = -20.0
+
+[node name="FoxEncounter" parent="ArenaManager" instance=ExtResource("fox_encounter")]
+player_path = NodePath("../../PlayerCharacter")
 
 [editable path="MovingPlatformManager/MovingPlatform"]

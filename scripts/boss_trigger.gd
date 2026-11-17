@@ -8,6 +8,7 @@ extends Node2D
 @export var gate_drop_duration: float = 1.0
 
 var arena_started = false
+@onready var encounter = $FoxEncounter
 
 
 func _ready():
@@ -56,3 +57,4 @@ func start_boss_arena():
 	await tween.finished
 
 	print("Gates dropped!")
+	encounter.start_encounter()
