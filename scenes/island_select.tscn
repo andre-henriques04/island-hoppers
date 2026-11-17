@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://jlsn8gww4ehv"]
+
+[ext_resource type="Texture2D" uid="uid://cehify7htj51w" path="res://assets/art/backgrouds/island_map.png" id="1_bkosh"]
+[ext_resource type="Script" uid="uid://v077mplnvnp3" path="res://scripts/islandSelectControl.gd" id="2_23i7o"]
+[ext_resource type="Script" uid="uid://03qu1mm7aen3" path="res://scripts/sceneMusic.gd" id="3_op8lu"]
+[ext_resource type="AudioStream" uid="uid://blwktjhi6h76q" path="res://assets/audio/Menu-audio.ogg" id="3_racfr"]
+
+[node name="IslandSelect" type="Control" unique_id=362607276]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=190649043]
+position = Vector2(1066, -596)
+zoom = Vector2(0.54, 0.54)
+
+[node name="Background" type="Sprite2D" parent="." unique_id=188716166]
+position = Vector2(1074.6667, -594.4375)
+scale = Vector2(0.53283334, 0.53283334)
+texture = ExtResource("1_bkosh")
+metadata/_edit_lock_ = true
+
+[node name="Tutorial Island Selection" type="Control" parent="." unique_id=539953089]
+layout_mode = 1
+anchor_left = 0.52000004
+anchor_top = -0.86200005
+anchor_right = 0.73200005
+anchor_bottom = -0.45000002
+offset_left = -13.040039
+offset_top = 4.57605
+offset_right = -11.264038
+offset_bottom = 2.600006
+script = ExtResource("2_23i7o")
+polygon_points = PackedVector2Array(90, 90, 65, 55, 70, 30, 80, 0, 130, -30, 160, -25, 180, -20, 200, -20, 220, -15, 245, 0, 255, 25, 260, 60, 230, 85, 205, 90, 195, 100, 200, 155, 220, 157, 240, 190, 210, 185, 190, 205, 170, 260, 135, 280, 120, 310, 90, 300, 75, 260, 60, 240, 25, 230, 5, 210, -15, 185, -25, 180, -10, 160, 70, 150, 145, 150, 145, 85, 132.5, 70, 130, 87, 115, 95)
+target_scene = "res://scenes/main.tscn"
+island_id = &"main"
+requires_completion = null
+outline_width = 10.0
+
+[node name="Music" type="Node" parent="." unique_id=1500601237]
+script = ExtResource("3_op8lu")
+music = ExtResource("3_racfr")
+volume_db = -20.0
