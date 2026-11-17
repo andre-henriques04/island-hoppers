@@ -1,10 +1,12 @@
+
 extends Node2D
-## A reusable, non-lethal pop-out obstacle for the tutorial island.
-## Connect `obstacle_touched` to a player or game manager when those systems exist.
+## A reusable, non-lethal pop-out obstacle.
 
 signal obstacle_touched(body: Node2D)
 
 enum Phase { RESTING, WARNING, EXTENDED, RETRACTING }
+
+@export_range(0.0, 30.0, 0.1) var initial_delay := 0.0
 
 @export_range(0.1, 10.0, 0.1) var rest_min_seconds := 1.4
 @export_range(0.1, 10.0, 0.1) var rest_max_seconds := 2.6
@@ -30,35 +32,55 @@ var _phase := Phase.RESTING
 
 func _ready() -> void:
 	_random.randomize()
+
 	pusher.position.y = HIDDEN_Y
 	hitbox.monitoring = false
 	hitbox.body_entered.connect(_on_hitbox_body_entered)
+
 	_run_cycle()
 
 
 func _run_cycle() -> void:
+	# Wait before starting the first cycle.
+	if initial_delay > 0.0:
+		_set_phase(Phase.RESTING, REST_COLOR)
+		await get_tree().create_timer(initial_delay).timeout
+
+		if not is_inside_tree():
+			return
+
 	while is_inside_tree():
 		_set_phase(Phase.RESTING, REST_COLOR)
-		await get_tree().create_timer(_random.randf_range(rest_min_seconds, rest_max_seconds)).timeout
+
+		await get_tree().create_timer(
+			_random.randf_range(rest_min_seconds, rest_max_seconds)
+		).timeout
+
 		if not is_inside_tree():
 			return
 
 		_set_phase(Phase.WARNING, WARNING_COLOR)
 		await get_tree().create_timer(warning_seconds).timeout
+
 		if not is_inside_tree():
 			return
 
 		_set_phase(Phase.EXTENDED, ACTIVE_COLOR)
 		await _move_pusher(EXTENDED_Y, extend_seconds)
+
 		if not is_inside_tree():
 			return
+
 		hitbox.monitoring = true
+
 		await get_tree().create_timer(active_seconds).timeout
+
 		if not is_inside_tree():
 			return
 
 		hitbox.monitoring = false
 		_set_phase(Phase.RETRACTING, REST_COLOR)
+
 		await _move_pusher(HIDDEN_Y, retract_seconds)
 
 
