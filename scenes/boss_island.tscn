@@ -1,0 +1,212 @@
+[gd_scene format=3 uid="uid://lsw6kwa0uhtn"]
+
+[ext_resource type="Script" uid="uid://dyrpsoyiwa1pv" path="res://scripts/CharacterMovement.gd" id="1_j8227"]
+[ext_resource type="Texture2D" uid="uid://5p5bjp8goweo" path="res://assets/player/bunny_walk_spritesheet.png" id="2_eie05"]
+[ext_resource type="Texture2D" uid="uid://46576yukkk8x" path="res://assets/art/tilesheets/FinalIslandTilesheet.png" id="3_eie05"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mb7my"]
+size = Vector2(60, 144)
+
+[sub_resource type="AtlasTexture" id="player_AtlasTexture_sugp2"]
+atlas = ExtResource("2_eie05")
+region = Rect2(0, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="player_AtlasTexture_jyhfs"]
+atlas = ExtResource("2_eie05")
+region = Rect2(512, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="player_AtlasTexture_tbgi4"]
+atlas = ExtResource("2_eie05")
+region = Rect2(1024, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="player_AtlasTexture_tefeu"]
+atlas = ExtResource("2_eie05")
+region = Rect2(1536, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="player_AtlasTexture_o6xl0"]
+atlas = ExtResource("2_eie05")
+region = Rect2(0, 512, 512, 512)
+
+[sub_resource type="AtlasTexture" id="player_AtlasTexture_tipki"]
+atlas = ExtResource("2_eie05")
+region = Rect2(512, 512, 512, 512)
+
+[sub_resource type="AtlasTexture" id="player_AtlasTexture_85g3d"]
+atlas = ExtResource("2_eie05")
+region = Rect2(1024, 512, 512, 512)
+
+[sub_resource type="AtlasTexture" id="player_AtlasTexture_choun"]
+atlas = ExtResource("2_eie05")
+region = Rect2(1536, 512, 512, 512)
+
+[sub_resource type="AtlasTexture" id="player_AtlasTexture_ya4ey"]
+atlas = ExtResource("2_eie05")
+region = Rect2(0, 1024, 512, 512)
+
+[sub_resource type="AtlasTexture" id="player_AtlasTexture_eb6dy"]
+atlas = ExtResource("2_eie05")
+region = Rect2(512, 1024, 512, 512)
+
+[sub_resource type="AtlasTexture" id="player_AtlasTexture_trceg"]
+atlas = ExtResource("2_eie05")
+region = Rect2(1024, 1024, 512, 512)
+
+[sub_resource type="AtlasTexture" id="player_AtlasTexture_a8y0u"]
+atlas = ExtResource("2_eie05")
+region = Rect2(1536, 1024, 512, 512)
+
+[sub_resource type="AtlasTexture" id="player_AtlasTexture_jkv2x"]
+atlas = ExtResource("2_eie05")
+region = Rect2(0, 1536, 512, 512)
+
+[sub_resource type="AtlasTexture" id="player_AtlasTexture_jbj1t"]
+atlas = ExtResource("2_eie05")
+region = Rect2(512, 1536, 512, 512)
+
+[sub_resource type="AtlasTexture" id="player_AtlasTexture_muem4"]
+atlas = ExtResource("2_eie05")
+region = Rect2(1024, 1536, 512, 512)
+
+[sub_resource type="AtlasTexture" id="player_AtlasTexture_dp3eg"]
+atlas = ExtResource("2_eie05")
+region = Rect2(1536, 1536, 512, 512)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wjaqg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("player_AtlasTexture_sugp2")
+}, {
+"duration": 1.0,
+"texture": SubResource("player_AtlasTexture_jyhfs")
+}, {
+"duration": 1.0,
+"texture": SubResource("player_AtlasTexture_tbgi4")
+}, {
+"duration": 1.0,
+"texture": SubResource("player_AtlasTexture_tefeu")
+}, {
+"duration": 1.0,
+"texture": SubResource("player_AtlasTexture_o6xl0")
+}, {
+"duration": 1.0,
+"texture": SubResource("player_AtlasTexture_tipki")
+}, {
+"duration": 1.0,
+"texture": SubResource("player_AtlasTexture_85g3d")
+}, {
+"duration": 1.0,
+"texture": SubResource("player_AtlasTexture_choun")
+}, {
+"duration": 1.0,
+"texture": SubResource("player_AtlasTexture_ya4ey")
+}, {
+"duration": 1.0,
+"texture": SubResource("player_AtlasTexture_eb6dy")
+}, {
+"duration": 1.0,
+"texture": SubResource("player_AtlasTexture_trceg")
+}, {
+"duration": 1.0,
+"texture": SubResource("player_AtlasTexture_a8y0u")
+}, {
+"duration": 1.0,
+"texture": SubResource("player_AtlasTexture_jkv2x")
+}, {
+"duration": 1.0,
+"texture": SubResource("player_AtlasTexture_jbj1t")
+}, {
+"duration": 1.0,
+"texture": SubResource("player_AtlasTexture_muem4")
+}, {
+"duration": 1.0,
+"texture": SubResource("player_AtlasTexture_dp3eg")
+}],
+"loop": 1,
+"name": &"run",
+"speed": 16.0
+}]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eie05"]
+texture = ExtResource("3_eie05")
+texture_region_size = Vector2i(128, 128)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, 7.7219925, 64, 9.371994, 64, 25.871994, -2.354004, 39.07199, -64, 22.571991)
+5:0/0 = 0
+5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-49.654, 9.921997, 55.946, 8.821991, 47.696, 25.321991, -2.354004, 39.07199, -40.854004, 24.771988)
+6:0/0 = 0
+6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-35.904, 10.4719925, 42.746002, 9.921997, 22.946, 19.821991, 0.3959961, 23.121994, -18.854004, 22.021996)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+4:1/0 = 0
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-48.554, -22.923996, 64, -23.473999, 64, 10.626007, -7.304001, 9.526001, -17.753998, 27.126007, -35.354004, 28.776001)
+5:1/0 = 0
+5:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -22.373993, 64, -23.473999, 64, 10.626007, -64, 12.276001)
+6:1/0 = 0
+6:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -22.373993, 34.496002, -21.823997, 41.095993, 28.776001, 13.595993, 19.975998, -64, 12.276001)
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -38.323997, 64, -38.323997, 64, 64, -64, 64)
+1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -38.323997, 36.145996, -37.773994, -19.404, 28.225998, -64, 64)
+0:3/0 = 0
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 32.296005, 3.475998, 26.246002, 64, -64, 64)
+0:4/0 = 0
+0:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 30.645996, -64, 22.395996, 5.67601, 26.246002, 64, -64, 64)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+
+[sub_resource type="TileSet" id="TileSet_wjaqg"]
+tile_size = Vector2i(128, 128)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_eie05")
+
+[node name="BossIsland" type="Node2D" unique_id=2125125439]
+
+[node name="PlayerCharacter" type="CharacterBody2D" parent="." unique_id=1610479913 node_paths=PackedStringArray("sprite")]
+position = Vector2(106, -204)
+script = ExtResource("1_j8227")
+move_speed = 350.0
+jump_height = 200.0
+sprite = NodePath("AnimatedSprite2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerCharacter" unique_id=6198132]
+position = Vector2(-0.27999878, 0.7200012)
+shape = SubResource("RectangleShape2D_mb7my")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="PlayerCharacter" unique_id=53554622]
+position = Vector2(-0.27999878, -18.279999)
+scale = Vector2(0.37, 0.37)
+sprite_frames = SubResource("SpriteFrames_wjaqg")
+animation = &"run"
+
+[node name="Camera (Screen 1)" type="Camera2D" parent="." unique_id=937299223]
+position = Vector2(576, -323)
+metadata/_edit_lock_ = true
+
+[node name="Camera (Screen 2)" type="Camera2D" parent="." unique_id=176729557]
+position = Vector2(1734, -751)
+metadata/_edit_lock_ = true
+
+[node name="Camera (Screen 3)" type="Camera2D" parent="." unique_id=622132673]
+position = Vector2(2890, -503)
+metadata/_edit_lock_ = true
+
+[node name="Camera (Screen 4)" type="Camera2D" parent="." unique_id=33968379]
+position = Vector2(4043, -503)
+metadata/_edit_lock_ = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1622777199]
+tile_set = SubResource("TileSet_wjaqg")
+physics_quadrant_size = 128
