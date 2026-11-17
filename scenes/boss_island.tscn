@@ -13,6 +13,12 @@
 [ext_resource type="Script" uid="uid://dquxmvnxgew0f" path="res://scripts/DeathBarrier.gd" id="11_bcj2a"]
 [ext_resource type="Script" uid="uid://dj2qeobg2uroe" path="res://scripts/boss_trigger.gd" id="12_66l60"]
 [ext_resource type="Texture2D" uid="uid://c63dejhdufj6s" path="res://assets/art/Gate.png" id="13_vgimm"]
+[ext_resource type="Texture2D" uid="uid://d3quwrsjh2t18" path="res://assets/art/backgrouds/Witch1.png" id="14_fetoo"]
+[ext_resource type="Texture2D" uid="uid://yqvr5qcb50p1" path="res://assets/art/backgrouds/Witch3.png" id="15_4lsye"]
+[ext_resource type="Texture2D" uid="uid://dv8jo0ovyek0" path="res://assets/art/backgrouds/Witch7.png" id="16_odysf"]
+[ext_resource type="Texture2D" uid="uid://cd30hl2p4j4ob" path="res://assets/art/backgrouds/Witch2.png" id="16_yacy6"]
+[ext_resource type="Script" uid="uid://03qu1mm7aen3" path="res://scripts/sceneMusic.gd" id="18_llimk"]
+[ext_resource type="AudioStream" uid="uid://cs5d1fqunfg10" path="res://assets/audio/WitchIsland.ogg" id="19_2crjm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eie05"]
 texture = ExtResource("3_eie05")
@@ -788,6 +794,7 @@ position = Vector2(-11, -5)
 shape = SubResource("RectangleShape2D_66l60")
 
 [node name="ArenaManager" type="Node2D" parent="." unique_id=1871656257]
+z_index = 1
 script = ExtResource("12_66l60")
 gate_drop_distance = 270.0
 
@@ -824,5 +831,40 @@ position = Vector2(-53, -2)
 scale = Vector2(1, 1.5)
 texture = ExtResource("13_vgimm")
 flip_h = true
+
+[node name="BackgroundManager" type="Node" parent="." unique_id=1809906370]
+
+[node name="Background1" type="Sprite2D" parent="BackgroundManager" unique_id=321876136]
+z_index = -10
+position = Vector2(989, -614.00006)
+scale = Vector2(1.9404944, 1.9404945)
+texture = ExtResource("14_fetoo")
+metadata/_edit_lock_ = true
+
+[node name="Background2" type="Sprite2D" parent="BackgroundManager" unique_id=1321229266]
+z_index = -10
+position = Vector2(3153.9998, -1359.0001)
+scale = Vector2(1.8203243, 1.8203247)
+texture = ExtResource("15_4lsye")
+metadata/_edit_lock_ = true
+
+[node name="Background3" type="Sprite2D" parent="BackgroundManager" unique_id=1010498439]
+z_index = -10
+position = Vector2(5315.555, -763.87494)
+scale = Vector2(1.9377899, 1.93779)
+texture = ExtResource("16_yacy6")
+metadata/_edit_lock_ = true
+
+[node name="Background4" type="Sprite2D" parent="BackgroundManager" unique_id=103801311]
+z_index = -10
+position = Vector2(7415, -762)
+scale = Vector2(1.9404944, 1.9404945)
+texture = ExtResource("16_odysf")
+metadata/_edit_lock_ = true
+
+[node name="Music" type="Node" parent="." unique_id=1068241904]
+script = ExtResource("18_llimk")
+music = ExtResource("19_2crjm")
+volume_db = -20.0
 
 [editable path="MovingPlatformManager/MovingPlatform"]

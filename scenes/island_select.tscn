@@ -3,7 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://cehify7htj51w" path="res://assets/art/backgrouds/island_map.png" id="1_bkosh"]
 [ext_resource type="Script" uid="uid://v077mplnvnp3" path="res://scripts/islandSelectControl.gd" id="2_23i7o"]
 [ext_resource type="Script" uid="uid://03qu1mm7aen3" path="res://scripts/sceneMusic.gd" id="3_op8lu"]
+[ext_resource type="Texture2D" uid="uid://dctb5pei5h2y" path="res://assets/art/backgrouds/map.png" id="3_r4r2i"]
 [ext_resource type="AudioStream" uid="uid://blwktjhi6h76q" path="res://assets/audio/Menu-audio.ogg" id="3_racfr"]
+[ext_resource type="Texture2D" uid="uid://dwn1b0yjpy8ai" path="res://assets/art/backgrouds/MapwQuestion mark-1.png" id="5_8sh4p"]
 
 [node name="IslandSelect" type="Control" unique_id=362607276]
 layout_mode = 3
@@ -17,11 +19,62 @@ grow_vertical = 2
 position = Vector2(1066, -596)
 zoom = Vector2(0.54, 0.54)
 
-[node name="Background" type="Sprite2D" parent="." unique_id=188716166]
+[node name="MapVersions" type="Control" parent="." unique_id=718804316]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MapVersion1" type="Sprite2D" parent="MapVersions" unique_id=188716166]
+visible = false
 position = Vector2(1074.6667, -594.4375)
 scale = Vector2(0.53283334, 0.53283334)
 texture = ExtResource("1_bkosh")
 metadata/_edit_lock_ = true
+
+[node name="MapVersion2" type="Sprite2D" parent="MapVersions" unique_id=708110927]
+visible = false
+position = Vector2(1073.5, -596.50006)
+scale = Vector2(0.53225, 0.5328888)
+texture = ExtResource("5_8sh4p")
+metadata/_edit_lock_ = true
+
+[node name="MapVersion3" type="Sprite2D" parent="MapVersions" unique_id=1947514466]
+position = Vector2(1068, -599.25)
+scale = Vector2(1.062, 1.0653334)
+texture = ExtResource("3_r4r2i")
+metadata/_edit_lock_ = true
+
+[node name="Final Island" type="Control" parent="." unique_id=1349543057]
+layout_mode = 1
+anchor_left = 0.578
+anchor_top = -1.539
+anchor_right = 0.99000007
+anchor_bottom = -0.88600004
+offset_left = 0.14398193
+offset_top = 0.2720337
+offset_right = -0.48010254
+offset_bottom = 0.12805176
+script = ExtResource("2_23i7o")
+polygon_points = PackedVector2Array(70, 250, 85, 265, 105, 300, 130, 325, 170, 345, 205, 360, 235, 400, 260, 420, 290, 390, 310, 370, 340, 365, 360, 360, 400, 265, 395, 250, 405, 230, 370, 215, 355, 170, 375, 165, 345, 145, 330, 120, 345, 95, 380, 90, 345, 80, 300, 100, 290, 95, 260, 100, 230, 125, 205, 140, 215, 100, 230, 75, 245, 73, 267, 76, 250, 65, 245, 50, 240, 65, 220, 65, 195, 85, 180, 135, 160, 70, 195, 30, 220, 25, 190, 17, 170, 35, 160, 20, 140, 10, 155, 40, 130, 80, 100, 85, 75, 90, 55, 70, 50, 40, 40, 67, 5, 80, 40, 80, 80, 105, 120, 110, 120, 140, 115, 170, 100, 168, 80, 160, 105, 130, 65, 125, 55, 145, 30, 150, 80, 180, 115, 190, 120, 210)
+target_scene = "res://scenes/boss_island.tscn"
+island_id = &"boss"
+outline_width = 10.0
+
+[node name="Cloud Island Selection" type="Control" parent="." unique_id=1019300331]
+layout_mode = 1
+anchor_left = 0.84400004
+anchor_top = -0.74600005
+anchor_right = 1.205
+anchor_bottom = -0.46
+offset_left = -9.288025
+offset_top = -65.59198
+offset_right = 17.839966
+offset_bottom = 14.080017
+script = ExtResource("2_23i7o")
+polygon_points = PackedVector2Array(5, 200, 25, 170, 40, 170, 40, 120, 55, 65, 85, 30, 120, 15, 165, 10, 210, 20, 250, 55, 285, 45, 330, 55, 355, 120, 385, 115, 410, 130, 415, 155, 405, 170, 425, 185, 435, 210, 405, 240, 325, 245, 290, 260, 250, 245, 225, 250, 200, 260, 175, 255, 155, 260, 125, 250, 105, 255, 80, 242, 50, 245, 15, 230)
+target_scene = "res://scenes/cloud_island.tscn"
+island_id = &"cloud"
+outline_width = 10.0
 
 [node name="Tutorial Island Selection" type="Control" parent="." unique_id=539953089]
 layout_mode = 1
@@ -37,7 +90,6 @@ script = ExtResource("2_23i7o")
 polygon_points = PackedVector2Array(90, 90, 65, 55, 70, 30, 80, 0, 130, -30, 160, -25, 180, -20, 200, -20, 220, -15, 245, 0, 255, 25, 260, 60, 230, 85, 205, 90, 195, 100, 200, 155, 220, 157, 240, 190, 210, 185, 190, 205, 170, 260, 135, 280, 120, 310, 90, 300, 75, 260, 60, 240, 25, 230, 5, 210, -15, 185, -25, 180, -10, 160, 70, 150, 145, 150, 145, 85, 132.5, 70, 130, 87, 115, 95)
 target_scene = "res://scenes/main.tscn"
 island_id = &"main"
-requires_completion = null
 outline_width = 10.0
 
 [node name="Music" type="Node" parent="." unique_id=1500601237]
