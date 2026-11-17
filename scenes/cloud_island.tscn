@@ -1020,7 +1020,6 @@ idle_delay = 0.2
 dash_speed = 1100.0
 dash_duration = 0.15
 ground_dash_cooldown = 0.3
-glide_duration = 1.5
 death_animation_duration = 0.2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerCharacter" unique_id=643451077]

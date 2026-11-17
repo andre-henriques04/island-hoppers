@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bgc6rrbq3bs3e"
+path="res://.godot/imported/Witchisland (1).ogg-afcd4ea0e3b007d215159f1ac0a43876.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/Witchisland (1).ogg"
+dest_files=["res://.godot/imported/Witchisland (1).ogg-afcd4ea0e3b007d215159f1ac0a43876.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
