@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://dkfl1bwbd7xlx" path="res://assets/art/powerups/Carrot.png" id="15_jkv2x"]
 [ext_resource type="Script" uid="uid://ctdy20s51u3ho" path="res://scripts/Carrot.gd" id="16_jbj1t"]
 [ext_resource type="AudioStream" uid="uid://2snvo0dkjsu0" path="res://assets/audio/tutorial-island.ogg" id="17_muem4"]
+[ext_resource type="Script" uid="uid://03qu1mm7aen3" path="res://scripts/sceneMusic.gd" id="18_dp3eg"]
 [ext_resource type="PackedScene" path="res://scenes/boxing_glove.tscn" id="glove_scene"]
 [ext_resource type="Script" uid="uid://b3327ynewmroj" path="res://scripts/CharacterMovement.gd" id="player_script"]
 [ext_resource type="Texture2D" uid="uid://bcbu6h5jt25l4" path="res://assets/art/Npcs/Bunny_sibling_1.png" id="sibling_art"]
@@ -662,7 +663,7 @@ texture = ExtResource("15_jkv2x")
 position = Vector2(-2.5, -19.5)
 shape = SubResource("RectangleShape2D_t588g")
 
-[node name="Music" type="AudioStreamPlayer" parent="." unique_id=19534881]
-stream = ExtResource("17_muem4")
+[node name="Music" type="Node" parent="." unique_id=1316403306]
+script = ExtResource("18_dp3eg")
+music = ExtResource("17_muem4")
 volume_db = -20.0
-autoplay = true

@@ -12,4 +12,4 @@ func _on_play_button_pressed() -> void:
 	if _starting:
 		return
 	_starting = true
-	get_tree().change_scene_to_file("res://scenes/main.tscn")
+	get_tree().change_scene_to_file("res://scenes/island_select.tscn")
