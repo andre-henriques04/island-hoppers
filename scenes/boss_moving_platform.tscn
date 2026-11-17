@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://bpxhxxmajcobe"]
+
+[ext_resource type="Script" uid="uid://ruvqqinnfpjy" path="res://scripts/moving_platforms.gd" id="1_4q4d6"]
+[ext_resource type="Texture2D" uid="uid://46576yukkk8x" path="res://assets/art/tilesheets/FinalIslandTilesheet.png" id="2_4q4d6"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ttrp8"]
+texture = ExtResource("2_4q4d6")
+texture_region_size = Vector2i(128, 128)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, 7.7219925, 64, 9.371994, 64, 25.871994, -2.354004, 39.07199, -64, 22.571991)
+5:0/0 = 0
+5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-49.654, 9.921997, 55.946, 8.821991, 47.696, 25.321991, -2.354004, 39.07199, -40.854004, 24.771988)
+6:0/0 = 0
+6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-35.904, 10.4719925, 42.746002, 9.921997, 22.946, 19.821991, 0.3959961, 23.121994, -18.854004, 22.021996)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+4:1/0 = 0
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-48.554, -22.923996, 64, -23.473999, 64, 10.626007, -7.304001, 9.526001, -17.753998, 27.126007, -35.354004, 28.776001)
+5:1/0 = 0
+5:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -22.373993, 64, -23.473999, 64, 10.626007, -64, 12.276001)
+6:1/0 = 0
+6:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -22.373993, 34.496002, -21.823997, 41.095993, 28.776001, 13.595993, 19.975998, -64, 12.276001)
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -38.323997, 64, -38.323997, 64, 64, -64, 64)
+1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -38.323997, 36.145996, -37.773994, -19.404, 28.225998, -64, 64)
+0:3/0 = 0
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 32.296005, 3.475998, 26.246002, 64, -64, 64)
+0:4/0 = 0
+0:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 30.645996, -64, 22.395996, 5.67601, 26.246002, 64, -64, 64)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+
+[sub_resource type="TileSet" id="TileSet_sm2yg"]
+tile_size = Vector2i(128, 128)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_ttrp8")
+
+[node name="MovingPlatform" type="AnimatableBody2D" unique_id=1843036443]
+script = ExtResource("1_4q4d6")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=360537595]
+tile_set = SubResource("TileSet_sm2yg")
+physics_quadrant_size = 128

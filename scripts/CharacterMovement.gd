@@ -241,19 +241,42 @@ func _physics_process(delta: float) -> void:
 			0.0
 		)
 
-	# -----------------------------------------------------
-	# GLIDE MECHANIC
-	# -----------------------------------------------------
-	
-	
-	# Only consume time while actively gliding.
+# -----------------------------------------------------
+# GLIDE MECHANIC
+# -----------------------------------------------------
+	# Restore glide when grounded.
+	if is_on_floor():
+
+		glide_available = glide_unlocked
+		glide_active = false
+		glide_timer = glide_duration
+
+	# Activate glide while falling and holding Space.
+	elif (
+		glide_unlocked
+		and glide_available
+		and glide_timer > 0.0
+		and velocity.y > 0.0
+		and Input.is_action_pressed("glide")
+		and not dash_active
+		and obstacle_launch_timer <= 0.0
+	):
+
+		glide_active = true
+
+	# Stop glide when Space is released.
+	if not Input.is_action_pressed("glide"):
+
+		glide_active = false
+
+	# Consume glide time.
 	if glide_active:
 
-		glide_timer = maxf(glide_timer - delta, 0.0)
+		glide_timer -= delta
 
-		# Glide duration exhausted.
 		if glide_timer <= 0.0:
 
+			glide_timer = 0.0
 			glide_active = false
 			glide_available = false
 
@@ -497,7 +520,7 @@ func unlock_glide() -> void:
 
 	glide_available = true
 	glide_active = false
-	glide_timer = 0.0
+	glide_timer = glide_duration
 
 	print("Glide ability permanently unlocked!")
 
