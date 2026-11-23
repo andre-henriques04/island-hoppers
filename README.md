@@ -1,54 +1,24 @@
 # Island Hoppers
 
-Island Hoppers is a 2D, side-view, single-player puzzle platformer about a bunny searching across islands for three lost siblings. The intended experience combines exploration, platforming, puzzles, and sibling rescues, with rescued siblings eventually unlocking abilities.
+Island Hoppers is a 2D, side-view, single-player puzzle platformer about a bunny searching across islands for three lost siblings.
 
-## Project status - Sprint 2 tutorial
+## Project status - Sprint 3 local demo
 
-Sprint 2 connected the tutorial into a playable local experience: main menu,
-five camera views with backtracking, timed boxing-glove launches, a speed carrot,
-sibling rescue, retry/fall recovery, and replay. Updated animations, backgrounds,
-and music are integrated. The game remains a prototype; Cloud Island is separate
-work and the complete game is not production-ready.
+The home screen opens a map with three selectable islands. Tutorial Island
+introduces movement, timed boxing gloves, a speed carrot and sibling rescue.
+Cloud Island adds platforming built around dash. Witch Island leads from its
+platforming route into the final fox chamber.
 
-**Documentation follow-up: November 2, 2026.** This update describes the Sprint 2
-implementation and a fresh audit of main at `28a03ba`. It is not a claim that
-these documentation changes were published during the sprint.
+Griffin assembled the island routes, map selection and demo integration
+([PR #37](https://github.com/andre-henriques04/island-hoppers/pull/37)).
+Andre added the fox encounter ([PR #38](https://github.com/andre-henriques04/island-hoppers/pull/38))
+using Alexa's fox animation artwork, Griffin's arena and Caleb's shared player
+abilities. Yaritza contributed island backgrounds, map art and audio assets.
 
-### Feature ownership and scope
-
-- Andre: tutorial baseline integration (PR #18), camera progression (IS-55,
-  PRs #19/#20), interactive gloves (IS-54, PR #21), and sibling rescue,
-  retry/fall recovery and replay (IS-56, PR #22).
-- Griffin: menu, layout, slope changes, later player-height fixes (IS-68,
-  PR #23) and final demo integration (IS-69, PR #26), including animation,
-  carrot and music integration.
-- Alexa: player animations and sibling artwork; Caleb: power-up behavior;
-  Yaritza: background/map artwork and published team meeting summaries.
-
-See [tutorial architecture and decisions](docs/architecture/tutorial-systems.md)
-for implementation rationale, tradeoffs, evidence links and individual credit.
-
-### Remaining work and known limitations
-
-- No verified browser release (IS-25 remains To Do). Run locally in Godot.
-- Shared island selection/unlocks and permanent saves are not implemented.
-  Rescue returns to the existing home screen; completion lasts for the session.
-- Retry uses the entrance unless a checkpoint is registered through
-  `TutorialFlow.set_checkpoint(world_position)`. Visible checkpoints and the
-  additional abilities in PR #24 are not integrated into main.
-- Cloud Island PRs #13/#14/#17/#27 remain open. A Done Jira card alone does
-  not establish that its branch is merged into the playable main project.
-- The November 2 completion/retry suite reports PASS, with resource-cleanup
-  warnings. The glove suite fails a scripted ledge-landing expectation after
-  later level changes. The glove practice script/check and completion practice
-  scene still reference the former `CharacterBody2D` node name; main now uses
-  `PlayerCharacter`. Treat these practice shortcuts as requiring repair.
-- The fixed logical viewport from PR #19 was removed during PR #26. Recheck
-  window sizing and camera coverage; do not rely on the old resize guarantee.
-
-The demo script and October 25 retrospective describe a connected tutorial
-playthrough. The current audit reran targeted checks; it does not replace a
-fresh uninterrupted manual route test.
+The demo runs locally. The islands are directly selectable and completion is
+session-only. A connected campaign progression, Cloud Island rescue, persistent
+saves and a verified browser build remain future work. Browser delivery is
+tracked in [IS-25](https://txst-fall26-cs3398-009-team04.atlassian.net/browse/IS-25).
 
 ## Requirements
 
@@ -107,51 +77,51 @@ Godot may not show `project.godot` in its FileSystem dock because that dock focu
 
 ## Run the prototype
 
-### Main playable flow
+Open the project and choose **Run Project** (F5). From the home screen, choose
+**Play** and select an island on the map.
 
-The configured starting scene is `res://scenes/main_menu.tscn`.
-Choose **Run Project**, then **Play** to enter `scenes/main.tscn`.
+| Island | Scene | What to try |
+|---|---|---|
+| Tutorial Island | `scenes/main.tscn` | Timed gloves, speed carrot, sibling rescue and retry |
+| Cloud Island | `scenes/cloud_island.tscn` | Dash-based platforming |
+| Witch Island | `scenes/boss_island.tscn` | Platforming, then the final fox fight |
 
-| Action | Control |
-|---|---|
-| Move left/right | Left/right arrow keys |
-| Jump while grounded | Space |
-| Retry the tutorial | R |
-| Return to the home screen | Esc |
+Use the left and right arrow keys to move and Space to jump. Shift dashes and
+holding Space while falling glides when those abilities are enabled. For local
+platforming tests, **9** enables dash and **0** enables glide. The fox encounter
+enables both abilities when the fight starts. In the tutorial, **R** retries
+and **Esc** returns home.
 
-The controller uses `ui_left`, `ui_right` and `ui_accept` for movement/jump.
-R and Esc are handled by the tutorial flow script. Falling below or outside
-the map triggers recovery. Retry clears velocity, glove launch state and
-temporary movement effects, then synchronizes the camera.
+### Fight the fox
 
-The five fixed cameras follow authored section boundaries and allow backtracking.
-Amber glove warnings precede active directional punches; wait for a safe attempt.
-The carrot gives a temporary speed boost. Reaching the sibling shows rescue
-feedback, records session completion and returns home. Play starts a new run.
+Cross into the Witch Island chamber to start the fight after the gates close.
+The fox telegraphs a bite, projectile throw and ground pound. Dodge the low
+shockwaves, then stomp the fox while it is stunned. Three successful stomps
+trigger victory dialogue. Press **Enter** after victory to return home, or
+**R** to retry the encounter.
 
-### Focused checks
+For focused testing, open one of these scenes and choose **Run Current Scene** (F6):
 
-- [Camera progression and backtracking](docs/testing/tutorial-camera.md) - IS-55.
-- [Glove timing and launch](docs/testing/tutorial-glove.md) - IS-54.
-- [Completion, retry and replay](docs/testing/tutorial-completion.md) - IS-56.
+- `scenes/fox_arena_preview.tscn` jumps to the real chamber entrance.
+- `scenes/fox_boss_practice.tscn` opens a standalone sandbox with the same encounter code.
 
-Those guides retain their original feature-development context. The November 2
-audit notes above and [follow-up checklist](docs/sprint-2-follow-up.md) supersede
-outdated pending-work statements. Use `PlayerCharacter` in the Remote Inspector.
+### Testing and architecture
 
-The original timing-only preview remains available: open
-`scenes/timing_obstacle_demo.tscn` and choose **Run Current Scene**. This demonstrates
-the reusable timing cycle, separately from the integrated tutorial glove.
-
-Existing automated checks can be run from the repository root:
+Run these focused checks from the repository root:
 
 ```bash
-godot --headless --path . --fixed-fps 60 --script tests/tutorial_flow_checks.gd
-godot --headless --path . --fixed-fps 60 --script tests/glove_checks.gd
+godot --headless --path . --script res://tests/fox_boss_checks.gd
+godot --headless --path . --script res://tests/fox_integration_checks.gd
 ```
 
-The latter is currently known to fail; see the specific regression findings above.
-Do not interpret an import completing as proof that the game or every check passes.
+PR #38 records passing combat and integration checks, including physical chamber
+entry, three-stomp victory, retry, death reset, and return to the menu. The
+checks exercise specific scenarios. A continuous manual run of the whole island
+remains unverified.
+
+- [Fox encounter testing and handoff](docs/testing/fox-boss.md) covers combat timing, integration and individual checks.
+- [Tutorial feature architecture](docs/architecture/tutorial-systems.md) explains the camera, glove, rescue and retry systems.
+- [Sprint 2 follow-up](docs/sprint-2-follow-up.md) records the earlier tutorial checks and caveats.
 
 ## How Godot files fit together
 
@@ -164,11 +134,11 @@ Godot stores the project as ordinary files that Git can track. The editor provid
 
 Paths beginning with `res://` are relative to the project root. For example, `res://scenes/main.tscn` refers to `scenes/main.tscn` in this repository.
 
-### Current gameplay flow
+### Gameplay components
 
 The character controller reads keyboard input and updates movement. Godot's physics system handles gravity and collision with platforms. The animated sprite displays movement and facing direction, while the camera determines the visible part of the level.
 
-The tutorial glove calls the shared controller launch method; its temporary launch lock preserves the impulse. The carrot calls the speed-boost method. TutorialFlow handles retry and completion, while session_progress.gd shares completion state with the menu. See the architecture guide for the component boundaries and tradeoffs.
+The tutorial glove calls the shared controller launch method; its temporary launch lock preserves the impulse. The carrot calls the speed-boost method. TutorialFlow handles retry and completion, while session_progress.gd shares completion state with the menu. The fox encounter reuses the player controller. The arena trigger starts combat after the gates close, and encounter code coordinates the boss, damage, music, retry and victory dialogue.
 
 ## Repository layout
 
@@ -182,6 +152,10 @@ island-hoppers/
 ├── scenes/
 │   ├── main_menu.tscn
 │   ├── main.tscn
+│   ├── island_select.tscn
+│   ├── cloud_island.tscn
+│   ├── boss_island.tscn
+│   ├── fox_encounter.tscn
 │   ├── boxing_glove.tscn
 │   ├── timing_obstacle.tscn
 │   └── timing_obstacle_demo.tscn
@@ -255,12 +229,11 @@ Coordinate before editing the same scene or script. Agree on scene ownership, as
 - State which features are complete and which are still separate prototypes.
 - Record any remaining work or known limitations in Jira.
 
-Sprint 2 added targeted glove and completion/retry checks, alongside manual team testing. Current test results and limitations are recorded above; there is no verified browser build.
-
-A [pull request template](.github/PULL_REQUEST_TEMPLATE.md) records scope, validation and reviewer focus. These process additions were made after Sprint 2 and do not imply historical review comments existed.
+A [pull request template](.github/PULL_REQUEST_TEMPLATE.md) records scope, validation and reviewer focus.
 
 ## Project tracking and documentation
 
+- [Confluence fox encounter and handoff](https://txst-fall26-cs3398-009-team04.atlassian.net/wiki/spaces/I/pages/34603009/Sprint+3+-+Fox+Boss+Encounter+and+Handoff)
 - [Sprint 2 tutorial feature architecture](docs/architecture/tutorial-systems.md)
 - [Confluence tutorial features and architecture decisions](https://txst-fall26-cs3398-009-team04.atlassian.net/wiki/spaces/I/pages/28114945/Sprint+2+-+Tutorial+Features+and+Architecture+Decisions)
 - [GitHub repository and pull requests](https://github.com/andre-henriques04/island-hoppers)
